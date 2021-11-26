@@ -1,18 +1,24 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
-const Button = () => {
+interface ButtonProps {
+    label: string
+    color: string
+}
+
+const Button = ({ label, color }: ButtonProps) => {
     return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
+        <TouchableOpacity style={[styles.container, { backgroundColor: color }]}>
+            <Text>{label}</Text>
+        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
+        width: 250,
+        height: 50,
+        borderRadius: 24,
         alignItems: 'center',
         justifyContent: 'center',
     },
