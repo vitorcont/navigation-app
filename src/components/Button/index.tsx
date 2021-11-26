@@ -1,14 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
-interface ButtonProps {
+interface ButtonProps extends TouchableOpacityProps {
     label: string
     color: string
 }
 
-const Button = ({ label, color }: ButtonProps) => {
+const Button = ({ label, color, onPress }: ButtonProps) => {
     return (
-        <TouchableOpacity style={[styles.container, { backgroundColor: color }]}>
+        <TouchableOpacity onPress={onPress} style={[styles.container, { backgroundColor: color }]}>
             <Text>{label}</Text>
         </TouchableOpacity>
     )
