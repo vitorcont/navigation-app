@@ -9,7 +9,9 @@ const Login = () => {
             <View style={styles.logoContainer}>
                 <Text>Image</Text>
                 <Text>Navegation App</Text>
-                <Divider fill={'white'} />
+                <View style={{ position: 'absolute', bottom: 0 }}>
+                    <Divider fill={'white'} />
+                </View>
             </View>
 
             <View style={styles.inputContainer}>
