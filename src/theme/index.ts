@@ -21,3 +21,5 @@ const theme = {
     bold: 'Inter-bold'
   }
 };
+
+export default theme;
