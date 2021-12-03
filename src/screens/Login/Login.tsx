@@ -1,12 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
 import Divider from '../../assets/divider.svg'
 import Logo from '../../assets/logo.svg'
 import Button from '../../components/Button'
+import { Input } from '../../components/Input'
 import theme from '../../theme'
 
 const Login = () => {
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+
     return (
         <View style={styles.container}>
             <View style={styles.logoContainer}>
@@ -17,22 +21,18 @@ const Login = () => {
                 </View>
             </View>
 
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholderTextColor={theme.colors.input.gray}
-                    placeholder="Email"
-                    style={[styles.input, { marginBottom: 30 }]}
-                ></TextInput>
-                <TextInput
-                    placeholderTextColor={theme.colors.input.gray}
-                    placeholder="Senha"
-                    secureTextEntry
-                    style={styles.input}
-                ></TextInput>
-                <Text style={[styles.link, { alignSelf: 'flex-start', marginLeft: '7.5%' }]}>
+            <KeyboardAvoidingView style={styles.inputContainer}>
+                <Input data={email} setData={setEmail} placeholder={'Email'} />
+                <Input data={senha} setData={setSenha} placeholder={'Senha'} isPassword />
+                <Text
+                    style={[
+                        styles.link,
+                        { alignSelf: 'flex-start', marginVertical: -35, marginLeft: '7.5%' },
+                    ]}
+                >
                     Esqueceu a senha?
                 </Text>
-            </View>
+            </KeyboardAvoidingView>
 
             <View style={styles.button}>
                 <Text style={styles.link}>Não tem conta? Clique aqui</Text>
@@ -75,17 +75,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
-
-    input: {
-        width: '85%',
-        height: 55,
-        backgroundColor: theme.colors.input.lightest_gray,
-        borderWidth: 1,
-        borderRadius: 12,
-        borderColor: theme.colors.input.light_gray,
-        padding: 20,
-    },
-
     link: {
         color: '#3692FE',
         marginVertical: 10,
