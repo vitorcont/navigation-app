@@ -1,42 +1,37 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
+import CreateAccountSvg from '../../assets/createAccount.svg'
 import Divider from '../../assets/divider.svg'
-import Logo from '../../assets/logo.svg'
 import Button from '../../components/Button'
 import { Input } from '../../components/Input'
 import theme from '../../theme'
 
-const Login = () => {
+const CreateAccount = () => {
+    const [nome, setNome] = useState('')
+    const [idade, setIdade] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
     return (
         <View style={styles.container}>
             <View style={styles.logoContainer}>
-                <Logo fill={'white'} width={'80%'} height={'50%'} />
-                <Text style={styles.textLogo}>Navegation App</Text>
+                <CreateAccountSvg width={'80%'} height={'50%'} />
+                <Text style={styles.textLogo}>Criar Conta</Text>
                 <View style={{ position: 'absolute', bottom: 0 }}>
                     <Divider fill={'white'} />
                 </View>
             </View>
 
             <KeyboardAvoidingView style={styles.inputContainer}>
+                <Input data={nome} setData={setNome} placeholder={'Nome'} />
+                <Input data={idade} setData={setIdade} placeholder={'Idade'} />
                 <Input data={email} setData={setEmail} placeholder={'Email'} />
                 <Input data={senha} setData={setSenha} placeholder={'Senha'} isPassword />
-                <Text
-                    style={[
-                        styles.link,
-                        { alignSelf: 'flex-start', marginVertical: -35, marginLeft: '7.5%' },
-                    ]}
-                >
-                    Esqueceu a senha?
-                </Text>
             </KeyboardAvoidingView>
 
             <View style={styles.button}>
-                <Text style={styles.link}>Não tem conta? Clique aqui</Text>
-                <Button label={'Entrar'} color={theme.colors.primary.lightest} />
+                <Button label={'Criar'} color={theme.colors.primary.light} />
             </View>
         </View>
     )
@@ -55,7 +50,7 @@ const styles = StyleSheet.create({
         top: 0,
         width: '100%',
         height: '50%',
-        backgroundColor: theme.colors.primary.lightest,
+        backgroundColor: theme.colors.primary.light,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -73,11 +68,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '50%',
         alignItems: 'center',
-        marginTop: 20,
-    },
-    link: {
-        color: '#3692FE',
-        marginVertical: 10,
+        marginTop: -10,
     },
 
     button: {
@@ -87,4 +78,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Login
+export default CreateAccount

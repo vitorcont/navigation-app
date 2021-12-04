@@ -5,6 +5,7 @@ import AppContent from './AppContent'
 
 import AppLoading from 'expo-app-loading'
 import Login from './src/screens/Login/Login'
+import CreateAccount from './src/screens/CreateAccount/CreateAccount'
 import { useFonts } from 'expo-font'
 import {
     Inter_300Light,
@@ -25,7 +26,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Login />
+            <CreateAccount />
         </View>
     )
 }
