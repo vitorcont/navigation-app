@@ -14,7 +14,6 @@ const RecoverPassword = () => {
         <View style={styles.container}>
             <Header
                 backgroundColor={theme.colors.primary.light}
-                dividerColor={theme.colors.white}
                 title={'Troca de Senha'}
                 Icon={RecoverPasswordSvg}
                 back
