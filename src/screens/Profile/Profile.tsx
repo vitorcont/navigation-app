@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import Divider from '../../assets/divider.svg'
 import ProfilePictureSvg from '../../assets/profilePicture.svg'
 import Button from '../../components/Button'
+import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
 import { ListDivider } from '../../components/ListDivider'
 import theme from '../../theme'
@@ -11,12 +12,12 @@ import theme from '../../theme'
 const Profile = () => {
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
-                <ProfilePictureSvg fill={'white'} width={'80%'} height={'50%'} />
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Divider fill={theme.colors.primary.lightest} />
-                </View>
-            </View>
+            <Header
+                backgroundColor={theme.colors.white}
+                dividerColor={theme.colors.primary.lightest}
+                Icon={ProfilePictureSvg}
+                isProfile
+            />
 
             <View style={styles.dataContainer}>
                 <Text style={styles.textLogo}>Perfil</Text>

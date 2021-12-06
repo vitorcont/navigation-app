@@ -12,6 +12,7 @@ interface HeaderProps {
     title?: string
     Icon: React.FC<SvgProps>
     back?: boolean
+    isProfile?: boolean
 }
 
 export function Header({
@@ -20,6 +21,7 @@ export function Header({
     title,
     Icon,
     back = false,
+    isProfile = false,
 }: HeaderProps) {
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -32,7 +34,7 @@ export function Header({
             )}
 
             <Icon width={'80%'} height={'50%'} />
-            <Text style={styles.text}>{title}</Text>
+            {!isProfile && <Text style={styles.text}>{title}</Text>}
             <View style={{ position: 'absolute', bottom: 0 }}>
                 <Divider fill={dividerColor} />
             </View>

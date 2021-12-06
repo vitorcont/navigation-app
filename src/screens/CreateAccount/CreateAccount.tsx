@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 
 import CreateAccountSvg from '../../assets/createAccount.svg'
 import Button from '../../components/Button'
@@ -15,7 +15,6 @@ const CreateAccount = () => {
         <View style={styles.container}>
             <Header
                 backgroundColor={theme.colors.primary.light}
-                dividerColor={theme.colors.white}
                 title={'Criar Conta'}
                 Icon={CreateAccountSvg}
                 back
