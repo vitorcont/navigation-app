@@ -1,33 +1,48 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
 import CreateAccountSvg from '../../assets/createAccount.svg'
-import Divider from '../../assets/divider.svg'
 import Button from '../../components/Button'
+import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
+import useForm from '../../Hooks/useForm'
 import theme from '../../theme'
 
 const CreateAccount = () => {
-    const [nome, setNome] = useState('')
-    const [idade, setIdade] = useState('')
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const [form, onChange] = useForm({ nome: '', idade: '', email: '', senha: '' })
 
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
-                <CreateAccountSvg width={'80%'} height={'50%'} />
-                <Text style={styles.textLogo}>Criar Conta</Text>
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Divider fill={'white'} />
-                </View>
-            </View>
+            <Header
+                backgroundColor={theme.colors.primary.light}
+                dividerColor={theme.colors.white}
+                title={'Criar Conta'}
+                Icon={CreateAccountSvg}
+                back
+            />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
-                <Input data={nome} setData={setNome} placeholder={'Nome'} />
-                <Input data={idade} setData={setIdade} placeholder={'Idade'} />
-                <Input data={email} setData={setEmail} placeholder={'Email'} />
-                <Input data={senha} setData={setSenha} placeholder={'Senha'} isPassword />
+                <Input
+                    data={form.nome}
+                    setData={(value) => onChange('nome', value)}
+                    placeholder={'Nome'}
+                />
+                <Input
+                    data={form.idade}
+                    setData={(value) => onChange('idade', value)}
+                    placeholder={'Idade'}
+                />
+                <Input
+                    data={form.email}
+                    setData={(value) => onChange('email', value)}
+                    placeholder={'Email'}
+                />
+                <Input
+                    data={form.senha}
+                    setData={(value) => onChange('senha', value)}
+                    placeholder={'Senha'}
+                    isPassword
+                />
             </KeyboardAvoidingView>
 
             <View style={styles.button}>

@@ -9,7 +9,11 @@ interface ButtonProps extends TouchableOpacityProps {
 
 const Button = ({ label, color, onPress }: ButtonProps) => {
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.container, { backgroundColor: color }]}>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={onPress}
+            style={[styles.container, { backgroundColor: color }]}
+        >
             <Text style={styles.label}>{label}</Text>
         </TouchableOpacity>
     )

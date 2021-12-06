@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
 import RecoverPasswordSvg from '../../assets/recoverPassword.svg'
-import Divider from '../../assets/divider.svg'
 import Button from '../../components/Button'
 import { Input } from '../../components/Input'
 import theme from '../../theme'
+import { Header } from '../../components/Header'
 
 const RecoverPassword = () => {
     const [email, setEmail] = useState('')
 
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
-                <RecoverPasswordSvg width={'80%'} height={'50%'} />
-                <Text style={styles.textLogo}>Troca de Senha</Text>
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Divider fill={'white'} />
-                </View>
-            </View>
+            <Header
+                backgroundColor={theme.colors.primary.light}
+                dividerColor={theme.colors.white}
+                title={'Troca de Senha'}
+                Icon={RecoverPasswordSvg}
+                back
+            />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
                 <Text style={{ width: '85%', marginTop: 30, marginBottom: 15 }}>
