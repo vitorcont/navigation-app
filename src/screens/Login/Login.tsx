@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
 import Divider from '../../assets/divider.svg'
@@ -6,25 +6,35 @@ import Logo from '../../assets/logo.svg'
 import Button from '../../components/Button'
 import { Input } from '../../components/Input'
 import theme from '../../theme'
+import navigationService from '../../services/navigation'
+import useForm from '../../Hooks/useForm'
+import { Header } from '../../components/Header'
 
 const Login = () => {
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const [form, onChange] = useForm({ email: '', senha: '' })
 
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
-                <Logo fill={'white'} width={'80%'} height={'50%'} />
-                <Text style={styles.textLogo}>Navegation App</Text>
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Divider fill={'white'} />
-                </View>
-            </View>
+            <Header
+                backgroundColor={theme.colors.primary.lightest}
+                title="Navigation App"
+                Icon={Logo}
+            />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
-                <Input data={email} setData={setEmail} placeholder={'Email'} />
-                <Input data={senha} setData={setSenha} placeholder={'Senha'} isPassword />
+                <Input
+                    data={form.email}
+                    setData={(value) => onChange('email', value)}
+                    placeholder={'Email'}
+                />
+                <Input
+                    data={form.senha}
+                    setData={(value) => onChange('senha', value)}
+                    placeholder={'Senha'}
+                    isPassword
+                />
                 <Text
+                    onPress={() => navigationService.navigate('Recovery')}
                     style={[
                         styles.link,
                         { alignSelf: 'flex-start', marginVertical: -35, marginLeft: '7.5%' },
@@ -35,7 +45,9 @@ const Login = () => {
             </KeyboardAvoidingView>
 
             <View style={styles.button}>
-                <Text style={styles.link}>Não tem conta? Clique aqui</Text>
+                <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
+                    Não tem conta? Clique aqui
+                </Text>
                 <Button label={'Entrar'} color={theme.colors.primary.lightest} />
             </View>
         </View>
@@ -48,23 +60,6 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    logoContainer: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        height: '50%',
-        backgroundColor: theme.colors.primary.lightest,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    textLogo: {
-        fontSize: 36,
-        fontFamily: theme.fonts.bold,
-        color: theme.colors.white,
-        marginBottom: 40,
     },
 
     inputContainer: {
