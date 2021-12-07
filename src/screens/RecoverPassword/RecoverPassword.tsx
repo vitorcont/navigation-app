@@ -12,12 +12,7 @@ const RecoverPassword = () => {
 
     return (
         <View style={styles.container}>
-            <Header
-                backgroundColor={theme.colors.primary.light}
-                title={'Troca de Senha'}
-                Icon={RecoverPasswordSvg}
-                back
-            />
+            <Header backgroundColor={theme.colors.purple} Icon={RecoverPasswordSvg} back />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
                 <Text style={{ width: '85%', marginTop: 30, marginBottom: 15 }}>
@@ -27,7 +22,7 @@ const RecoverPassword = () => {
             </KeyboardAvoidingView>
 
             <View style={styles.button}>
-                <Button label={'Enviar'} color={theme.colors.primary.lightest_medium} />
+                <Button label={'Enviar'} color={theme.colors.purple} />
             </View>
         </View>
     )
@@ -39,23 +34,6 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    logoContainer: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        height: '50%',
-        backgroundColor: theme.colors.primary.lightest_medium,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    textLogo: {
-        fontSize: 36,
-        fontFamily: theme.fonts.bold,
-        color: theme.colors.white,
-        marginBottom: 40,
     },
 
     inputContainer: {
