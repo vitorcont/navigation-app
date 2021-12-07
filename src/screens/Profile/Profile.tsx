@@ -14,9 +14,8 @@ const Profile = () => {
         <View style={styles.container}>
             <Header
                 backgroundColor={theme.colors.white}
-                dividerColor={theme.colors.primary.lightest}
+                dividerColor={theme.colors.purbleblue}
                 Icon={ProfilePictureSvg}
-                isProfile
             />
 
             <View style={styles.dataContainer}>
@@ -34,7 +33,7 @@ const Profile = () => {
             </View>
 
             <View style={styles.button}>
-                <Button label={'Sair'} color={theme.colors.primary.darkest} />
+                <Button label={'Sair'} color={theme.colors.darkpurpleblue} />
             </View>
         </View>
     )
@@ -43,17 +42,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.colors.primary.lightest,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    logoContainer: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        height: '50%',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.purbleblue,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -71,6 +60,7 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.bold,
         color: theme.colors.white,
         marginBottom: 30,
+        marginTop: -10,
     },
 
     title: {
@@ -85,7 +75,7 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.regular,
         fontSize: 11,
         alignSelf: 'flex-start',
-        marginTop: 2,
+        marginTop: 3,
     },
 
     button: {

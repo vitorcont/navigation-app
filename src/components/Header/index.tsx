@@ -9,35 +9,40 @@ import navigationService from '../../services/navigation'
 interface HeaderProps {
     backgroundColor?: string
     dividerColor?: string
-    title?: string
     Icon: React.FC<SvgProps>
     back?: boolean
-    isProfile?: boolean
+    isLogin?: boolean
 }
 
 export function Header({
-    backgroundColor = theme.colors.primary.medium,
+    backgroundColor,
     dividerColor = theme.colors.white,
-    title,
     Icon,
     back = false,
-    isProfile = false,
+    isLogin = false,
 }: HeaderProps) {
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             {back && (
-                <View style={{ alignSelf: 'flex-start', marginLeft: '7.5%' }}>
+                <View style={{ alignSelf: 'flex-start', marginLeft: '7.5%', marginBottom: 10 }}>
                     <TouchableOpacity onPress={navigationService.back}>
                         <Entypo name="chevron-left" size={24} color="#FFF" />
                     </TouchableOpacity>
                 </View>
             )}
 
-            <Icon width={'80%'} height={'50%'} />
-            {!isProfile && <Text style={styles.text}>{title}</Text>}
-            <View style={{ position: 'absolute', bottom: 0 }}>
-                <Divider fill={dividerColor} />
-            </View>
+            {isLogin ? (
+                <View style={{ position: 'absolute', bottom: 0 }}>
+                    <Icon />
+                </View>
+            ) : (
+                <>
+                    <Icon width={'80%'} height={'50%'} style={{ marginBottom: 30 }} />
+                    <View style={{ position: 'absolute', bottom: 0 }}>
+                        <Divider fill={dividerColor} />
+                    </View>
+                </>
+            )}
         </View>
     )
 }

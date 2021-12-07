@@ -13,12 +13,7 @@ const CreateAccount = () => {
 
     return (
         <View style={styles.container}>
-            <Header
-                backgroundColor={theme.colors.primary.light}
-                title={'Criar Conta'}
-                Icon={CreateAccountSvg}
-                back
-            />
+            <Header backgroundColor={theme.colors.pink} Icon={CreateAccountSvg} back />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
                 <Input
@@ -45,7 +40,7 @@ const CreateAccount = () => {
             </KeyboardAvoidingView>
 
             <View style={styles.button}>
-                <Button label={'Criar'} color={theme.colors.primary.light} />
+                <Button label={'Criar'} color={theme.colors.pink} />
             </View>
         </View>
     )
@@ -57,23 +52,6 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    logoContainer: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        height: '50%',
-        backgroundColor: theme.colors.primary.light,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    textLogo: {
-        fontSize: 36,
-        fontFamily: theme.fonts.bold,
-        color: theme.colors.white,
-        marginBottom: 40,
     },
 
     inputContainer: {

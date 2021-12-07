@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 
 import Divider from '../../assets/divider.svg'
-import Logo from '../../assets/logo.svg'
+import LoginSvg from '../../assets/login.svg'
 import Button from '../../components/Button'
 import { Input } from '../../components/Input'
 import theme from '../../theme'
@@ -15,11 +15,7 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
-            <Header
-                backgroundColor={theme.colors.primary.lightest}
-                title="Navigation App"
-                Icon={Logo}
-            />
+            <Header backgroundColor={theme.colors.blue} Icon={LoginSvg} isLogin />
 
             <KeyboardAvoidingView style={styles.inputContainer}>
                 <Input
@@ -48,7 +44,7 @@ const Login = () => {
                 <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
                     Não tem conta? Clique aqui
                 </Text>
-                <Button label={'Entrar'} color={theme.colors.primary.lightest} />
+                <Button label={'Entrar'} color={theme.colors.blue} />
             </View>
         </View>
     )
@@ -71,7 +67,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     link: {
-        color: '#3692FE',
+        color: theme.colors.blue,
         marginVertical: 10,
     },
 

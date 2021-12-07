@@ -9,18 +9,13 @@ const theme = {
             gray: '#565656',
         },
 
-        primary: {
-            lightest: '#DA1E37',
-            light: '#C71F37',
-            lightest_medium: '#BD1F36',
-            lighter_medium: '#B21E35',
-            medium: '#A71E34',
-            darker_medium: '#A11D33',
-            darkest_medium: '#85182A',
-            dark: '#6E1423',
-            darkest: '#641220',
-        },
+        blue: '#379FFF',
+        pink: '#FF378B',
+        purple: '#D83CFF',
+        purbleblue: '#7737FF',
+        darkpurpleblue: '#11348C',
     },
+
     fonts: {
         light: 'Inter_300Light',
         regular: 'Inter_400Regular',
