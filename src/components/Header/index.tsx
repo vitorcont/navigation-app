@@ -10,23 +10,25 @@ interface HeaderProps {
     backgroundColor?: string
     dividerColor?: string
     Icon: React.FC<SvgProps>
-    back?: boolean
     isLogin?: boolean
+    back?: boolean
+    backColor?: boolean
 }
 
 export function Header({
     backgroundColor,
     dividerColor = theme.colors.white,
     Icon,
-    back = false,
     isLogin = false,
+    back = false,
+    backColor = false,
 }: HeaderProps) {
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             {back && (
                 <View style={{ alignSelf: 'flex-start', marginLeft: '7.5%', marginBottom: 10 }}>
                     <TouchableOpacity onPress={navigationService.back}>
-                        <Entypo name="chevron-left" size={24} color="#FFF" />
+                        <Entypo name="chevron-left" size={24} color={backColor ? '#000' : '#FFF'} />
                     </TouchableOpacity>
                 </View>
             )}
