@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
-import Divider from '../../assets/divider.svg'
-import ProfilePictureSvg from '../../assets/profilePicture.svg'
+import ProfilePictureMaleSvg from '../../assets/profilePictureMale.svg'
+import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
@@ -15,7 +15,8 @@ const Profile = () => {
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureSvg}
+                Icon={ProfilePictureFemaleSvg}
+                isProfile
             />
 
             <View style={styles.dataContainer}>
