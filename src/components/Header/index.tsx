@@ -5,6 +5,7 @@ import theme from '../../theme'
 import Divider from '../../assets/divider.svg'
 import { Entypo } from '@expo/vector-icons'
 import navigationService from '../../services/navigation'
+import Window from '../../services/dimensions'
 
 interface HeaderProps {
     backgroundColor?: string
@@ -47,8 +48,8 @@ export function Header({
                     </View>
                 </>
             ) : (
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Icon />
+                <View style={{ position: 'absolute', bottom: '-2%' }}>
+                    <Icon width={Window.widthScale(1)} height={Window.heightScale(0.46)} />
                 </View>
             )}
         </View>

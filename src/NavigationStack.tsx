@@ -6,6 +6,7 @@ import Login from './screens/Login/Login'
 import Profile from './screens/Profile/Profile'
 import CreateAccount from './screens/CreateAccount/CreateAccount'
 import RecoveryPassword from './screens/RecoverPassword/RecoverPassword'
+import Map from './screens/Map'
 
 const StartNavigator = () => {
     const StartStack = createStack()
@@ -23,8 +24,10 @@ const ContentNavigator = () => {
     const ContentStack = createStack()
 
     return (
-        <ContentStack.Navigator screenOptions={{ headerShown: false }}>
-            <></>
+        <ContentStack.Navigator
+            initialRouteName='Map'
+            screenOptions={{ headerShown: false }}>
+            <ContentStack.Screen name='Map' component={Map} />
         </ContentStack.Navigator>
     )
 }
@@ -35,7 +38,7 @@ const AppNavigator = () => {
     return (
         <Stack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Start" component={StartNavigator} />
-            {/* <Stack.Screen name="Content" component={ContentNavigator} /> */}
+            <Stack.Screen name="Content" component={ContentNavigator} />
         </Stack.Navigator>
     )
 }
