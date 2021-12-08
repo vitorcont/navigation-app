@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import RecoverPasswordSvg from '../../assets/recoverPassword.svg'
 import Button from '../../components/Button'
@@ -14,12 +14,12 @@ const RecoverPassword = () => {
         <View style={styles.container}>
             <Header backgroundColor={theme.colors.purple} Icon={RecoverPasswordSvg} back />
 
-            <KeyboardAvoidingView style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
                 <Text style={{ width: '85%', marginTop: 30, marginBottom: 15 }}>
                     Digite um e-mail válido para enviarmos um link para recuperação de Senha
                 </Text>
                 <Input data={email} setData={setEmail} placeholder={'Email'} />
-            </KeyboardAvoidingView>
+            </View>
 
             <View style={styles.button}>
                 <Button label={'Enviar'} color={theme.colors.purple} />
@@ -33,22 +33,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.white,
         alignItems: 'center',
-        justifyContent: 'center',
     },
 
     inputContainer: {
-        position: 'absolute',
-        top: '50%',
         width: '100%',
-        height: '50%',
         alignItems: 'center',
-        marginTop: -10,
+        marginTop: 20,
     },
 
     button: {
-        position: 'absolute',
-        bottom: 50,
         alignItems: 'center',
+        marginTop: 120,
     },
 })
 

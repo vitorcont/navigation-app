@@ -10,7 +10,7 @@ interface HeaderProps {
     backgroundColor?: string
     dividerColor?: string
     Icon: React.FC<SvgProps>
-    isLogin?: boolean
+    isProfile?: boolean
     back?: boolean
     backColor?: boolean
 }
@@ -19,31 +19,37 @@ export function Header({
     backgroundColor,
     dividerColor = theme.colors.white,
     Icon,
-    isLogin = false,
+    isProfile = false,
     back = false,
     backColor = false,
 }: HeaderProps) {
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             {back && (
-                <View style={{ alignSelf: 'flex-start', marginLeft: '7.5%', marginBottom: 10 }}>
+                <View
+                    style={{
+                        alignSelf: 'flex-start',
+                        marginLeft: '7.5%',
+                        marginBottom: '75%',
+                    }}
+                >
                     <TouchableOpacity onPress={navigationService.back}>
                         <Entypo name="chevron-left" size={24} color={backColor ? '#000' : '#FFF'} />
                     </TouchableOpacity>
                 </View>
             )}
 
-            {isLogin ? (
-                <View style={{ position: 'absolute', bottom: 0 }}>
-                    <Icon />
-                </View>
-            ) : (
+            {isProfile ? (
                 <>
                     <Icon width={'80%'} height={'50%'} style={{ marginBottom: 30 }} />
                     <View style={{ position: 'absolute', bottom: 0 }}>
                         <Divider fill={dividerColor} />
                     </View>
                 </>
+            ) : (
+                <View style={{ position: 'absolute', bottom: 0 }}>
+                    <Icon />
+                </View>
             )}
         </View>
     )
@@ -51,8 +57,6 @@ export function Header({
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        top: 0,
         width: '100%',
         height: '50%',
         alignItems: 'center',

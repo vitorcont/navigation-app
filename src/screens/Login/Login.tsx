@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import Divider from '../../assets/divider.svg'
 import LoginSvg from '../../assets/login.svg'
@@ -15,9 +15,9 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
-            <Header backgroundColor={theme.colors.blue} Icon={LoginSvg} isLogin />
+            <Header backgroundColor={theme.colors.blue} Icon={LoginSvg} />
 
-            <KeyboardAvoidingView style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
                 <Input
                     data={form.email}
                     setData={(value) => onChange('email', value)}
@@ -38,7 +38,7 @@ const Login = () => {
                 >
                     Esqueceu a senha?
                 </Text>
-            </KeyboardAvoidingView>
+            </View>
 
             <View style={styles.button}>
                 <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
@@ -55,26 +55,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.white,
         alignItems: 'center',
-        justifyContent: 'center',
     },
 
     inputContainer: {
-        position: 'absolute',
-        top: '50%',
         width: '100%',
-        height: '50%',
         alignItems: 'center',
         marginTop: 20,
     },
+
     link: {
         color: theme.colors.blue,
         marginVertical: 10,
     },
 
     button: {
-        position: 'absolute',
-        bottom: 50,
         alignItems: 'center',
+        marginTop: 120,
     },
 })
 
