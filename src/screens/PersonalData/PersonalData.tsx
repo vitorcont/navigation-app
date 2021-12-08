@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import ProfilePictureSvg from '../../assets/profilePicture.svg'
+import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
 
@@ -13,7 +13,7 @@ const PersonalData = ({}: PersonalDataProps) => {
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureSvg}
+                Icon={ProfilePictureFemaleSvg}
                 backColor
                 back
             />
