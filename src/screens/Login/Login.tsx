@@ -44,7 +44,11 @@ const Login = () => {
                 <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
                     Não tem conta? Clique aqui
                 </Text>
-                <Button label={'Entrar'} color={theme.colors.blue} />
+                <Button
+                    onPress={() => navigationService.navigate('Content')}
+                    label={'Entrar'}
+                    color={theme.colors.blue}
+                />
             </View>
         </View>
     )
