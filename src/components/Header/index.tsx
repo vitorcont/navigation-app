@@ -48,7 +48,7 @@ export function Header({
                     </View>
                 </>
             ) : (
-                <View style={{ position: 'absolute', bottom: '-2%' }}>
+                <View style={{ position: 'absolute', bottom: '-10%' }}>
                     <Icon width={Window.widthScale(1)} height={Window.heightScale(0.46)} />
                 </View>
             )}
@@ -62,12 +62,5 @@ const styles = StyleSheet.create({
         height: '50%',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    text: {
-        fontSize: 36,
-        fontFamily: theme.fonts.bold,
-        color: theme.colors.white,
-        marginBottom: 40,
     },
 })
