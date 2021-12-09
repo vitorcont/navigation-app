@@ -8,7 +8,7 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import BottomModal from '../../components/BottomSheet';
 import Window from '../../services/dimensions';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import theme from '../../theme';
 import navigationService from '../../services/navigation';
 
@@ -17,12 +17,22 @@ const Map = () => {
   const origin = { latitude: -22.744243, longitude: -47.298004 };
   const destination = { latitude: -20.073270, longitude: -44.296913 };
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [visible, setVisible] = useState(false);
   const sheetRef = useRef(null);
 
   // setInterval(async () => {
   //   let location = await Location.getCurrentPositionAsync({});
   //   setLocation(location);
   // }, 1000)
+
+  const sheetHandler = () => {
+    if (visible) {
+      sheetRef.current.snapTo(0);
+    } else {
+      sheetRef.current.snapTo(Window.heightScale(0.45))
+    }
+    setVisible(!visible);
+  }
 
   useEffect(() => {
     (async () => {
@@ -52,22 +62,20 @@ const Map = () => {
       <TouchableOpacity
         onPress={() => navigationService.navigate('Profile')}
         activeOpacity={0.7}
-        style={{
-          position: 'absolute',
-          top: Window.heightScale(0.075),
-          left: Window.widthScale(0.08),
-          alignSelf: 'flex-start',
-          zIndex: 100,
-          backgroundColor: theme.colors.white,
-          padding: 5,
-          borderRadius: 100,
-
-        }}>
+        style={styles.profileIcon}
+      >
         <FontAwesome name="user-circle-o" size={30} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={sheetHandler}
+        activeOpacity={0.7}
+        style={styles.navigateIcon}
+      >
+        <Ionicons name="car-sport" size={30} color="black" />
       </TouchableOpacity>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[Window.heightScale(0.45), Window.heightScale(0.45), Window.heightScale(0.06)]}
+        snapPoints={[Window.heightScale(0.06), Window.heightScale(0.45), Window.heightScale(0.45)]}
         borderRadius={20}
         renderContent={BottomModal}
       />
@@ -86,4 +94,30 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  profileIcon: {
+    position: 'absolute',
+    top: Window.heightScale(0.075),
+    left: Window.widthScale(0.08),
+    alignSelf: 'flex-start',
+    zIndex: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.white,
+    padding: 5,
+    borderRadius: 100,
+    elevation: 10
+  },
+  navigateIcon: {
+    position: 'absolute',
+    top: Window.heightScale(0.075),
+    right: Window.widthScale(0.08),
+    alignSelf: 'flex-start',
+    zIndex: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.white,
+    padding: 5,
+    borderRadius: 100,
+    elevation: 10
+  }
 });

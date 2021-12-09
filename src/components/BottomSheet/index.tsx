@@ -15,7 +15,7 @@ const BottomModal = () => {
     <View
       style={{
         backgroundColor: 'white',
-        height: Window.heightScale(0.5),
+        height: Window.heightScale(0.45),
       }}
     >
       <View>

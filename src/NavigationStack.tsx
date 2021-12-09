@@ -6,7 +6,7 @@ import Login from './screens/Login/Login'
 import Profile from './screens/Profile/Profile'
 import CreateAccount from './screens/CreateAccount/CreateAccount'
 import RecoveryPassword from './screens/RecoverPassword/RecoverPassword'
-import Map from './screens/Map'
+import Map from './screens/Map/Map'
 
 const StartNavigator = () => {
     const StartStack = createStack()
@@ -28,6 +28,8 @@ const ContentNavigator = () => {
             initialRouteName='Map'
             screenOptions={{ headerShown: false }}>
             <ContentStack.Screen name='Map' component={Map} />
+            <ContentStack.Screen name="Profile" component={Profile} />
+
         </ContentStack.Navigator>
     )
 }
