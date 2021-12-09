@@ -43,7 +43,7 @@ export function Header({
             {isProfile ? (
                 <>
                     <Icon width={'80%'} height={'50%'} style={{ marginBottom: 30 }} />
-                    <View style={{ position: 'absolute', bottom: 0 }}>
+                    <View style={{ position: 'absolute', bottom: '-5%' }}>
                         <Divider fill={dividerColor} />
                     </View>
                 </>
