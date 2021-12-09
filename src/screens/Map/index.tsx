@@ -1,15 +1,23 @@
 import * as React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Location from 'expo-location';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
+import BottomModal from '../../components/BottomSheet';
+import Window from '../../services/dimensions';
+import { FontAwesome } from '@expo/vector-icons';
+import theme from '../../theme';
+import navigationService from '../../services/navigation';
 
 const Map = () => {
   const GOOGLE_MAPS_APIKEY = 'AIzaSyCKiN1FuOVkvn9NalCY4HcI7YFEDnJwFNM';
   const origin = { latitude: -22.744243, longitude: -47.298004 };
   const destination = { latitude: -20.073270, longitude: -44.296913 };
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const sheetRef = useRef(null);
 
   // setInterval(async () => {
   //   let location = await Location.getCurrentPositionAsync({});
@@ -30,9 +38,6 @@ const Map = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ position: 'absolute', zIndex: 100, backgroundColor: 'red', alignSelf: 'center' }}>
-        <Text>Velocidade: {location?.coords.speed}</Text>
-      </View>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
@@ -44,6 +49,28 @@ const Map = () => {
           apikey={GOOGLE_MAPS_APIKEY}
         />
       </MapView>
+      <TouchableOpacity
+        onPress={() => navigationService.navigate('Profile')}
+        activeOpacity={0.7}
+        style={{
+          position: 'absolute',
+          top: Window.heightScale(0.075),
+          left: Window.widthScale(0.08),
+          alignSelf: 'flex-start',
+          zIndex: 100,
+          backgroundColor: theme.colors.white,
+          padding: 5,
+          borderRadius: 100,
+
+        }}>
+        <FontAwesome name="user-circle-o" size={30} color="black" />
+      </TouchableOpacity>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[Window.heightScale(0.45), Window.heightScale(0.45), Window.heightScale(0.06)]}
+        borderRadius={20}
+        renderContent={BottomModal}
+      />
     </View>
   );
 }
@@ -54,8 +81,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   map: {
     width: '100%',

@@ -8,7 +8,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "clean-install": "rm node-modules && yarn install"
+        "clean-install": "rm -rf node_modules && yarn install"
     },
     "dependencies": {
         "@expo-google-fonts/inter": "^0.2.0",
@@ -24,13 +24,15 @@
         "react-dom": "17.0.1",
         "react-native": "0.64.3",
         "react-native-flash-message": "^0.2.0",
-        "react-native-gesture-handler": "^1.10.3",
+        "react-native-gesture-handler": "~1.10.2",
         "react-native-maps": "0.28.1",
         "react-native-maps-directions": "^1.8.0",
+        "react-native-reanimated": "~2.2.0",
         "react-native-safe-area-context": "^3.3.2",
         "react-native-sensitive-info": "^5.5.8",
         "react-native-svg": "12.1.1",
-        "react-native-web": "0.17.1"
+        "react-native-web": "0.17.1",
+        "reanimated-bottom-sheet": "^1.0.0-alpha.22"
     },
     "devDependencies": {
         "@babel/core": "^7.12.9",
