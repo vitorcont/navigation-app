@@ -4,20 +4,20 @@ import {
     TextInput,
     StyleSheet,
     TouchableWithoutFeedback,
-    KeyboardAvoidingView,
+    TextInputProps,
 } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 import theme from '../../theme'
 
-interface InputProps {
-    data: string
-    setData: (data: string) => void
+interface InputProps extends TextInputProps {
+    data?: string
+    setData?: (data: string) => void
     placeholder: string
     isPassword?: boolean
 }
 
-export function Input({ data, setData, placeholder, isPassword = false }: InputProps) {
+export function Input({ data, setData, placeholder, isPassword = false, ...rest }: InputProps) {
     const [hidePassword, setHidePassword] = useState(true)
 
     return (
@@ -29,6 +29,7 @@ export function Input({ data, setData, placeholder, isPassword = false }: InputP
                 placeholderTextColor={theme.colors.input.gray}
                 secureTextEntry={isPassword ? hidePassword : false}
                 style={styles.input}
+                {...rest}
             ></TextInput>
 
             {isPassword ? (

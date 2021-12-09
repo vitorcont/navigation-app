@@ -3,6 +3,10 @@ const theme = {
         white: '#FFF',
         black: '#000',
 
+        bottomSheet: {
+            gray: '#545454'
+        },
+
         input: {
             lightest_gray: '#F8F8F8',
             light_gray: '#E6E6E6',

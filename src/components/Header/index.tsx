@@ -48,7 +48,7 @@ export function Header({
                     </View>
                 </>
             ) : (
-                <View style={{ position: 'absolute', bottom: '-10%' }}>
+                <View style={{ position: 'absolute', bottom: '-5%' }}>
                     <Icon width={Window.widthScale(1)} height={Window.heightScale(0.46)} />
                 </View>
             )}
