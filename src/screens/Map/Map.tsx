@@ -58,7 +58,7 @@ const Map = () => {
                 />
             </MapView>
             <TouchableOpacity
-                onPress={() => navigationService.navigate('Profile')}
+                onPress={() => navigationService.navigate('ProfileNavigator')}
                 activeOpacity={0.7}
                 style={styles.profileIcon}
             >

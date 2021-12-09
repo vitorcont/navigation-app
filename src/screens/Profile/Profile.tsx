@@ -7,6 +7,8 @@ import Button from '../../components/Button'
 import { Header } from '../../components/Header'
 import { ListDivider } from '../../components/ListDivider'
 import theme from '../../theme'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import navigationService from '../../services/navigation'
 
 const Profile = () => {
     return (
@@ -15,20 +17,44 @@ const Profile = () => {
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
                 Icon={ProfilePictureFemaleSvg}
+                back
+                backColor
                 isProfile
             />
 
             <View style={styles.dataContainer}>
                 <Text style={styles.textLogo}>Perfil</Text>
+                <TouchableWithoutFeedback
+                    onPress={() => navigationService.navigate('PersonalData')}
+                >
+                    <>
+                        <Text style={styles.title}>Dados pessoais</Text>
+                        <Text style={styles.subtitle}>Nome, Idade, E-mail e Senha</Text>
+                    </>
+                </TouchableWithoutFeedback>
 
-                <Text style={styles.title}>Dados pessoais</Text>
-                <Text style={styles.subtitle}>Nome, Idade, E-mail e Senha</Text>
                 <ListDivider />
-                <Text style={styles.title}>Destinos</Text>
-                <Text style={styles.subtitle}>Consulte os seus últimos destinos</Text>
+
+                <TouchableWithoutFeedback
+                    onPress={() => navigationService.navigate('Destinations')}
+                >
+                    <>
+                        <Text style={styles.title}>Destinos</Text>
+                        <Text style={styles.subtitle}>Consulte os seus últimos destinos</Text>
+                    </>
+                </TouchableWithoutFeedback>
+
                 <ListDivider />
-                <Text style={styles.title}>Termos e Serviços</Text>
-                <Text style={styles.subtitle}>Privacidade de seus dados</Text>
+
+                <TouchableWithoutFeedback
+                    onPress={() => navigationService.navigate('TermsOfService')}
+                >
+                    <>
+                        <Text style={styles.title}>Termos e Serviços</Text>
+                        <Text style={styles.subtitle}>Privacidade de seus dados</Text>
+                    </>
+                </TouchableWithoutFeedback>
+
                 <ListDivider />
 
                 <View style={styles.button}>
@@ -48,7 +74,6 @@ const styles = StyleSheet.create({
     dataContainer: {
         width: '85%',
         height: '50%',
-        alignItems: 'center',
         marginTop: 5,
         marginLeft: '7.5%',
     },
@@ -58,6 +83,7 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.bold,
         color: theme.colors.white,
         marginBottom: 30,
+        alignSelf: 'center',
     },
 
     title: {
