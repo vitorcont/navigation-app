@@ -31,7 +31,6 @@ export function Header({
                     style={{
                         alignSelf: 'flex-start',
                         marginLeft: '7.5%',
-                        marginBottom: '75%',
                     }}
                 >
                     <TouchableOpacity onPress={navigationService.back}>

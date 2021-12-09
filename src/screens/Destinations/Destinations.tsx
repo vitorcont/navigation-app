@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
+import { Card } from '../../components/Card'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
 
@@ -20,20 +21,9 @@ const PersonalData = ({}: PersonalDataProps) => {
             />
 
             <View style={styles.dataContainer}>
-                <Text style={styles.textLogo}>Dados Pessoais</Text>
+                <Text style={styles.textLogo}>Destinos</Text>
 
-                <Text style={styles.label}>
-                    Nome: <Text style={styles.userDataText}>Renato Santos</Text>
-                </Text>
-                <Text style={styles.label}>
-                    Idade: <Text style={styles.userDataText}>20</Text>
-                </Text>
-                <Text style={styles.label}>
-                    E-mail: <Text style={styles.userDataText}>renato@email.com</Text>
-                </Text>
-                <Text style={styles.label}>
-                    Senha: <Text style={styles.userDataText}>*********</Text>
-                </Text>
+                <Card />
             </View>
         </View>
     )
@@ -46,10 +36,10 @@ const styles = StyleSheet.create({
     },
 
     dataContainer: {
-        width: '85%',
+        width: '100%',
         height: '50%',
         marginTop: 5,
-        marginLeft: '7.5%',
+        alignItems: 'center',
     },
 
     textLogo: {
@@ -57,7 +47,6 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.bold,
         color: theme.colors.white,
         marginBottom: 30,
-        alignSelf: 'center',
     },
 
     label: {

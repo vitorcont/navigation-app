@@ -7,6 +7,9 @@ import Profile from './screens/Profile/Profile'
 import CreateAccount from './screens/CreateAccount/CreateAccount'
 import RecoveryPassword from './screens/RecoverPassword/RecoverPassword'
 import Map from './screens/Map/Map'
+import PersonalData from './screens/PersonalData/PersonalData'
+import TermsOfService from './screens/TermsOfService/TermsOfService'
+import Destinations from './screens/Destinations/Destinations'
 
 const StartNavigator = () => {
     const StartStack = createStack()
@@ -24,13 +27,23 @@ const ContentNavigator = () => {
     const ContentStack = createStack()
 
     return (
-        <ContentStack.Navigator
-            initialRouteName='Map'
-            screenOptions={{ headerShown: false }}>
-            <ContentStack.Screen name='Map' component={Map} />
-            <ContentStack.Screen name="Profile" component={Profile} />
-
+        <ContentStack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+            <ContentStack.Screen name="Map" component={Map} />
+            <ContentStack.Screen name="ProfileNavigator" component={ProfileNavigator} />
         </ContentStack.Navigator>
+    )
+}
+
+const ProfileNavigator = () => {
+    const ProfileStack = createStack()
+
+    return (
+        <ProfileStack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+            <ProfileStack.Screen name="Profile" component={Profile} />
+            <ProfileStack.Screen name="PersonalData" component={PersonalData} />
+            <ProfileStack.Screen name="Destinations" component={Destinations} />
+            <ProfileStack.Screen name="TermsOfService" component={TermsOfService} />
+        </ProfileStack.Navigator>
     )
 }
 

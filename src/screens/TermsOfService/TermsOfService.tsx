@@ -14,6 +14,7 @@ const TermsOfService = () => {
                 Icon={ProfilePictureFemaleSvg}
                 backColor
                 back
+                isProfile
             />
 
             <View style={styles.dataContainer}>
@@ -31,19 +32,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.purbleblue,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
     dataContainer: {
-        position: 'absolute',
-        top: '50%',
         width: '100%',
         height: '50%',
+        marginTop: 5,
+        marginLeft: '7.5%',
     },
 
     textLogo: {
         fontSize: 36,
+        width: '100%',
         fontFamily: theme.fonts.bold,
         color: theme.colors.white,
         marginBottom: 30,
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        marginLeft: '7.5%',
         fontSize: 16,
         fontFamily: theme.fonts.regular,
         color: theme.colors.white,
