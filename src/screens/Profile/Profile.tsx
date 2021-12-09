@@ -5,7 +5,6 @@ import ProfilePictureMaleSvg from '../../assets/profilePictureMale.svg'
 import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
-import { Input } from '../../components/Input'
 import { ListDivider } from '../../components/ListDivider'
 import theme from '../../theme'
 
@@ -31,10 +30,10 @@ const Profile = () => {
                 <Text style={styles.title}>Termos e Serviços</Text>
                 <Text style={styles.subtitle}>Privacidade de seus dados</Text>
                 <ListDivider />
-            </View>
 
-            <View style={styles.button}>
-                <Button label={'Sair'} color={theme.colors.darkpurpleblue} />
+                <View style={styles.button}>
+                    <Button label={'Sair'} color={theme.colors.darkpurpleblue} />
+                </View>
             </View>
         </View>
     )
@@ -47,11 +46,11 @@ const styles = StyleSheet.create({
     },
 
     dataContainer: {
-        position: 'absolute',
-        top: '50%',
         width: '85%',
         height: '50%',
         alignItems: 'center',
+        marginTop: 5,
+        marginLeft: '7.5%',
     },
 
     textLogo: {
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.bold,
         color: theme.colors.white,
         marginBottom: 30,
-        marginTop: -10,
     },
 
     title: {
@@ -78,8 +76,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        position: 'absolute',
-        bottom: 50,
+        marginTop: 40,
         alignItems: 'center',
     },
 })
