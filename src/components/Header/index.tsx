@@ -29,8 +29,10 @@ export function Header({
             {back && (
                 <View
                     style={{
+                        position: 'absolute',
                         alignSelf: 'flex-start',
-                        marginLeft: '7.5%',
+                        top: 50,
+                        left: '7.5%',
                     }}
                 >
                     <TouchableOpacity onPress={navigationService.back}>
