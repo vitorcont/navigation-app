@@ -1,10 +1,8 @@
-import * as React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import MapViewDirections from 'react-native-maps-directions'
-import { useEffect, useRef, useState } from 'react'
 import * as Location from 'expo-location'
-import Animated from 'react-native-reanimated'
 import BottomSheet from 'reanimated-bottom-sheet'
 import BottomModal from '../../components/BottomSheet'
 import Window from '../../services/dimensions'
@@ -30,7 +28,7 @@ const Map = () => {
             if (visible) {
                 sheetRef.current.snapTo(0)
             } else {
-                sheetRef.current.snapTo(Window.heightScale(0.45))
+                sheetRef.current.snapTo(1)
             }
         setVisible(!visible)
     }

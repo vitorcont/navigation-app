@@ -1,14 +1,33 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
 
 import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
 import { Card } from '../../components/Card'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
 
-interface PersonalDataProps {}
+const items = [
+    {
+        id: '1',
+        data: '03/12/21',
+        origem: 'Sao Paulo',
+        destino: 'Sao Paulo',
+        tempoViagem: '4:00',
+        consumo: '10,00',
+        distancia: '300',
+    },
+    {
+        id: '2',
+        data: '03/12/21',
+        origem: 'Sao Paulo',
+        destino: 'Sao Paulo',
+        tempoViagem: '4:00',
+        consumo: '10,00',
+        distancia: '300',
+    },
+]
 
-const PersonalData = ({}: PersonalDataProps) => {
+const Destinations = () => {
     return (
         <View style={styles.container}>
             <Header
@@ -23,7 +42,13 @@ const PersonalData = ({}: PersonalDataProps) => {
             <View style={styles.dataContainer}>
                 <Text style={styles.textLogo}>Destinos</Text>
 
-                <Card />
+                <FlatList
+                    data={items}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+                    bounces={false}
+                    renderItem={({ item }) => <Card data={item} />}
+                />
             </View>
         </View>
     )
@@ -69,4 +94,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default PersonalData
+export default Destinations
