@@ -1,14 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, ScrollView } from 'react-native'
 import MapViewDirections from 'react-native-maps-directions'
 import * as Location from 'expo-location'
 import BottomSheet from 'reanimated-bottom-sheet'
-import BottomModal from '../../components/BottomSheet'
+// import BottomModal from '../../components/BottomModal'
 import Window from '../../services/dimensions'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import theme from '../../theme'
 import navigationService from '../../services/navigation'
+import axios from 'axios'
+import { Input } from '../../components/Input'
+import { Weather } from '../../components/Weather'
+
+export interface InfoProps {
+    city: string
+    description: string
+    temp: number
+    temp_min: number
+    temp_max: number
+    humidity: number
+}
 
 const Map = () => {
     const { GOOGLE_MAPS_APIKEY } = process.env
@@ -17,11 +29,69 @@ const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>(null)
     const [visible, setVisible] = useState(false)
     const sheetRef = useRef<BottomSheet>(null)
+    const [info, setInfo] = useState<InfoProps>({} as InfoProps)
+    const { WEATHER_APIKEY } = process.env
 
     // setInterval(async () => {
     //   let location = await Location.getCurrentPositionAsync({});
     //   setLocation(location);
     // }, 1000)
+
+    const fetchWeather = async () => {
+        console.log('bbb')
+        try {
+            console.log('cccc')
+            const response = await axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?q=Sao%20Paulo&appid=${WEATHER_APIKEY}&units=metric`
+            )
+
+            response !== undefined &&
+                response !== null &&
+                setInfo({
+                    city: 'São Paulo',
+                    description: response.data.weather[0].description,
+                    temp: response.data.main.temp.toPrecision(2),
+                    temp_min: response.data.main.temp_min.toPrecision(2),
+                    temp_max: response.data.main.temp_max.toPrecision(2),
+                    humidity: response.data.main.humidity.toPrecision(2),
+                })
+        } catch (error) {}
+    }
+
+    const renderContent = () => (
+        <View
+            style={{
+                backgroundColor: 'white',
+                height: Window.heightScale(0.45),
+            }}
+        >
+            <View>
+                <View
+                    style={{
+                        width: '30%',
+                        height: Window.heightScale(0.006),
+                        backgroundColor: theme.colors.bottomSheet.gray,
+                        alignSelf: 'center',
+                        marginTop: Window.heightScale(0.023),
+                        borderRadius: 10,
+                    }}
+                />
+                <ScrollView>
+                    <View style={{ alignItems: 'center', marginTop: '10%' }}>
+                        <Input placeholder="Sua Localização" />
+                        <Input placeholder="Destino" />
+                        <Input placeholder="KM/L" />
+
+                        {Object.keys(info).length !== 0 && <Weather info={info} />}
+                    </View>
+                </ScrollView>
+            </View>
+        </View>
+    )
+
+    useEffect(() => {
+        fetchWeather()
+    }, [visible === true])
 
     const sheetHandler = () => {
         if (sheetRef && sheetRef.current)
@@ -77,7 +147,7 @@ const Map = () => {
                     Window.heightScale(0.45),
                 ]}
                 borderRadius={20}
-                renderContent={BottomModal}
+                renderContent={renderContent}
             />
         </View>
     )
