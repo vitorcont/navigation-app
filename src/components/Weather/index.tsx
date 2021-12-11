@@ -14,7 +14,6 @@ interface WeatherProps {
 }
 
 export function Weather({ info }: WeatherProps) {
-    console.log(info)
     return (
         <View style={styles.container}>
             <Text style={styles.title}>

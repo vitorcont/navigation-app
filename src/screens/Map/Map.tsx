@@ -30,6 +30,7 @@ const Map = () => {
     const [visible, setVisible] = useState(false)
     const sheetRef = useRef<BottomSheet>(null)
     const [info, setInfo] = useState<InfoProps>({} as InfoProps)
+    const [destino, setDestino] = useState('')
     const { WEATHER_APIKEY } = process.env
 
     // setInterval(async () => {
@@ -38,24 +39,27 @@ const Map = () => {
     // }, 1000)
 
     const fetchWeather = async () => {
-        console.log('bbb')
+        let city = destino
+        if (city.includes(' ')) city.replaceAll(' ', '%20')
+
         try {
-            console.log('cccc')
             const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=Sao%20Paulo&appid=${WEATHER_APIKEY}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_APIKEY}&units=metric`
             )
 
             response !== undefined &&
                 response !== null &&
                 setInfo({
-                    city: 'São Paulo',
+                    city: destino,
                     description: response.data.weather[0].description,
                     temp: response.data.main.temp.toPrecision(2),
                     temp_min: response.data.main.temp_min.toPrecision(2),
                     temp_max: response.data.main.temp_max.toPrecision(2),
                     humidity: response.data.main.humidity.toPrecision(2),
                 })
-        } catch (error) {}
+        } catch (error) {
+            setInfo({} as InfoProps)
+        }
     }
 
     const renderContent = () => (
@@ -79,7 +83,7 @@ const Map = () => {
                 <ScrollView>
                     <View style={{ alignItems: 'center', marginTop: '10%' }}>
                         <Input placeholder="Sua Localização" />
-                        <Input placeholder="Destino" />
+                        <Input data={destino} setData={setDestino} placeholder="Destino" />
                         <Input placeholder="KM/L" />
 
                         {Object.keys(info).length !== 0 && <Weather info={info} />}
@@ -91,7 +95,7 @@ const Map = () => {
 
     useEffect(() => {
         fetchWeather()
-    }, [visible === true])
+    }, [destino])
 
     const sheetHandler = () => {
         if (sheetRef && sheetRef.current)
