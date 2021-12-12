@@ -10,6 +10,7 @@ import {
     Inter_500Medium,
     Inter_700Bold,
 } from '@expo-google-fonts/inter'
+import { AuthProvider } from './src/Hooks/auth'
 
 export default function App() {
     let [fontsloaded] = useFonts({
@@ -23,7 +24,9 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <AppContent />
+            <AuthProvider>
+                <AppContent />
+            </AuthProvider>
         </View>
     )
 }

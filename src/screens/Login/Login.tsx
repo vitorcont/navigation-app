@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 import Divider from '../../assets/divider.svg'
 import LoginSvg from '../../assets/login.svg'
@@ -9,9 +9,12 @@ import theme from '../../theme'
 import navigationService from '../../services/navigation'
 import useForm from '../../Hooks/useForm'
 import { Header } from '../../components/Header'
+import { useAuth } from '../../Hooks/auth'
+import { ValidateEmail, ValidatePassword } from '../CreateAccount/CreateAccount'
 
 const Login = () => {
     const [form, onChange] = useForm({ email: '', senha: '' })
+    const { loading, signIn } = useAuth()
 
     return (
         <View style={styles.container}>
@@ -38,17 +41,25 @@ const Login = () => {
                 >
                     Esqueceu a senha?
                 </Text>
-            </View>
 
-            <View style={styles.button}>
-                <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
-                    Não tem conta? Clique aqui
-                </Text>
-                <Button
-                    onPress={() => navigationService.navigate('Content')}
-                    label={'Entrar'}
-                    color={theme.colors.blue}
-                />
+                <View style={styles.button}>
+                    <Text onPress={() => navigationService.navigate('Create')} style={styles.link}>
+                        Não tem conta? Clique aqui
+                    </Text>
+
+                    {loading ? (
+                        <ActivityIndicator color="black" />
+                    ) : (
+                        <Button
+                            label={'Entrar'}
+                            color={theme.colors.blue}
+                            onPress={() => {
+                                if (ValidateEmail(form.email) && ValidatePassword(form.senha))
+                                    signIn(form.email, form.senha)
+                            }}
+                        />
+                    )}
+                </View>
             </View>
         </View>
     )
@@ -74,6 +85,7 @@ const styles = StyleSheet.create({
 
     button: {
         alignItems: 'center',
+        width: '100%',
         marginTop: 120,
     },
 })
