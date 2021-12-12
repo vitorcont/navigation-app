@@ -31,7 +31,7 @@ export function Header({
                     style={{
                         position: 'absolute',
                         alignSelf: 'flex-start',
-                        top: 50,
+                        top: 40,
                         left: '7.5%',
                     }}
                 >

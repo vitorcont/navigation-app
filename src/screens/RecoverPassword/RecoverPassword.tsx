@@ -19,10 +19,10 @@ const RecoverPassword = () => {
                     Digite um e-mail válido para enviarmos um link para recuperação de Senha
                 </Text>
                 <Input data={email} setData={setEmail} placeholder={'Email'} />
-            </View>
 
-            <View style={styles.button}>
-                <Button label={'Enviar'} color={theme.colors.purple} />
+                <View style={styles.button}>
+                    <Button label={'Enviar'} color={theme.colors.purple} />
+                </View>
             </View>
         </View>
     )
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
 
     button: {
         alignItems: 'center',
+        width: '100%',
         marginTop: 120,
     },
 })

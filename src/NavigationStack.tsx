@@ -11,7 +11,7 @@ import PersonalData from './screens/PersonalData/PersonalData'
 import TermsOfService from './screens/TermsOfService/TermsOfService'
 import Destinations from './screens/Destinations/Destinations'
 
-const StartNavigator = () => {
+export const StartNavigator = () => {
     const StartStack = createStack()
 
     return (
@@ -23,7 +23,7 @@ const StartNavigator = () => {
     )
 }
 
-const ContentNavigator = () => {
+export const ContentNavigator = () => {
     const ContentStack = createStack()
 
     return (
@@ -47,7 +47,7 @@ const ProfileNavigator = () => {
     )
 }
 
-const AppNavigator = () => {
+export const AppNavigator = () => {
     const Stack = createStack()
 
     return (
@@ -57,5 +57,3 @@ const AppNavigator = () => {
         </Stack.Navigator>
     )
 }
-
-export default AppNavigator

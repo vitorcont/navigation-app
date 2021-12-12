@@ -9,8 +9,11 @@ import { ListDivider } from '../../components/ListDivider'
 import theme from '../../theme'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import navigationService from '../../services/navigation'
+import { useAuth } from '../../Hooks/auth'
 
 const Profile = () => {
+    const { user, setUser, signOut } = useAuth()
+
     return (
         <View style={styles.container}>
             <Header
@@ -58,7 +61,7 @@ const Profile = () => {
                 <ListDivider />
 
                 <View style={styles.button}>
-                    <Button label={'Sair'} color={theme.colors.darkpurpleblue} />
+                    <Button label={'Sair'} color={theme.colors.darkpurpleblue} onPress={signOut} />
                 </View>
             </View>
         </View>

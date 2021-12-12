@@ -1,15 +1,44 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 
 import CreateAccountSvg from '../../assets/createAccount.svg'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
+import { useAuth } from '../../Hooks/auth'
 import useForm from '../../Hooks/useForm'
+import navigationService from '../../services/navigation'
 import theme from '../../theme'
+import { UserProps } from '../../types'
+
+export const ValidateEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email)
+}
+
+export const ValidatePassword = (password: string) => {
+    if (password.length < 8) return false
+
+    return true
+}
 
 const CreateAccount = () => {
     const [form, onChange] = useForm({ nome: '', idade: '', email: '', senha: '' })
+    const { loading, signUp } = useAuth()
+
+    const handlePress = () => {
+        if (ValidateEmail(form.email) && ValidatePassword(form.senha) && form.nome !== '') {
+            const user: UserProps = {
+                avatar: '',
+                email: form.email,
+                age: form.idade,
+                name: form.nome,
+                password: form.senha,
+                auth: true,
+            }
+            signUp(user)
+            navigationService.navigate('Login')
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -40,7 +69,15 @@ const CreateAccount = () => {
                     />
                 </View>
                 <View style={styles.button}>
-                    <Button label={'Criar'} color={theme.colors.pink} />
+                    {loading ? (
+                        <ActivityIndicator color="black" />
+                    ) : (
+                        <Button
+                            label={'Criar'}
+                            color={theme.colors.pink}
+                            onPress={() => handlePress()}
+                        />
+                    )}
                 </View>
             </ScrollView>
         </View>
