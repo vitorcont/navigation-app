@@ -12,6 +12,7 @@ import navigationService from '../../services/navigation'
 import axios from 'axios'
 import { Input } from '../../components/Input'
 import { Weather } from '../../components/Weather'
+import Button from '../../components/Button'
 
 export interface InfoProps {
     city: string
@@ -81,12 +82,14 @@ const Map = () => {
                     }}
                 />
                 <ScrollView>
-                    <View style={{ alignItems: 'center', marginTop: '10%' }}>
+                    <View style={{ alignItems: 'center', marginTop: '10%', marginBottom: '20%' }}>
                         <Input placeholder="Sua Localização" />
                         <Input data={destino} setData={setDestino} placeholder="Destino" />
                         <Input placeholder="KM/L" />
 
                         {Object.keys(info).length !== 0 && <Weather info={info} />}
+
+                        <Button label="Pesquisar" color={theme.colors.blue} small />
                     </View>
                 </ScrollView>
             </View>

@@ -5,14 +5,15 @@ import theme from '../../theme'
 interface ButtonProps extends TouchableOpacityProps {
     label: string
     color: string
+    small?: boolean
 }
 
-const Button = ({ label, color, onPress }: ButtonProps) => {
+const Button = ({ label, color, small = false, onPress }: ButtonProps) => {
     return (
         <TouchableOpacity
             activeOpacity={0.8}
             onPress={onPress}
-            style={[styles.container, { backgroundColor: color }]}
+            style={[small ? styles.smallContainer : styles.container, { backgroundColor: color }]}
         >
             <Text style={styles.label}>{label}</Text>
         </TouchableOpacity>
@@ -20,8 +21,16 @@ const Button = ({ label, color, onPress }: ButtonProps) => {
 }
 
 const styles = StyleSheet.create({
+    smallContainer: {
+        width: '52%',
+        height: 55,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     container: {
-        width: 250,
+        width: '65%',
         height: 55,
         borderRadius: 30,
         alignItems: 'center',
