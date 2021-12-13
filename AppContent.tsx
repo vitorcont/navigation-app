@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Platform, LogBox } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -13,6 +13,7 @@ import { UserProps } from './src/types'
 const AppContent = () => {
 
     const { user, setUser } = useAuth()
+    const [requested, setRequested] = useState(false);
 
     const loadUser = async () => {
         let firebaseUser = firebase.auth().currentUser
@@ -25,11 +26,14 @@ const AppContent = () => {
                 .then((doc) => {
                     if (doc.exists) setUser(doc.data() as UserProps)
                 })
+        setRequested(true);
     }
 
     useEffect(() => {
-        LogBox.ignoreAllLogs();//Ignore all log notifications
-        loadUser()
+        LogBox.ignoreAllLogs();
+        if (!requested) {
+            loadUser()
+        }
     }, [user])
 
     return (
@@ -57,7 +61,8 @@ const AppContent = () => {
                         routeNameRef.current = currentRouteName;
                     }}
                 >
-                    <AppNavigator />
+                    {/* <AppNavigator /> */}
+                    {user.auth ? <ContentNavigator /> : <StartNavigator />}
                 </NavigationContainer>
             </KeyboardAvoidingView>
         </SafeAreaProvider>

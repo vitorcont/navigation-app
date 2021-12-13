@@ -52,7 +52,6 @@ export function Card({ data }: CardProps) {
                 <Text style={styles.title}>{data.origem}</Text>
                 <AntDesign name="arrowright" size={24} color={theme.colors.purbleblue} />
                 <Text style={styles.title}>{data.destino}</Text>
-                <Text style={styles.date}>{data.data}</Text>
             </TouchableOpacity>
 
             {visible && (
@@ -83,8 +82,8 @@ export function Card({ data }: CardProps) {
                                 </View>
 
                                 <View style={{ flexDirection: 'column', marginRight: '7.5%' }}>
-                                    <Text style={styles.label}>Custo:</Text>
-                                    <Text style={styles.data}>{data.distancia}km</Text>
+                                    <Text style={styles.label}>Data:</Text>
+                                    <Text style={styles.data}>{data.data}</Text>
                                 </View>
                             </View>
                         </View>
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 18,
+        fontSize: 14,
         fontFamily: theme.fonts.bold,
         color: theme.colors.purbleblue,
         marginHorizontal: 5,
