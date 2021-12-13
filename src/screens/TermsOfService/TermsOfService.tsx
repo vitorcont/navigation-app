@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 
-import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
+import GeladoSvg from '../../assets/gelado.svg'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
 
@@ -11,7 +11,7 @@ const TermsOfService = () => {
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureFemaleSvg}
+                Icon={GeladoSvg}
                 backColor
                 back
                 isProfile

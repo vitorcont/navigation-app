@@ -17,12 +17,16 @@
             "**/*"
         ],
         "ios": {
+            "bundleIdentifier": "com.mypackage.coolapp",
+            "googleServicesFile": "./GoogleService-Info.plist",
             "config": {
                 "googleMapsApiKey": "AIzaSyCKiN1FuOVkvn9NalCY4HcI7YFEDnJwFNM"
             },
             "supportsTablet": true
         },
         "android": {
+            "package": "br.com.navigation",
+            "googleServicesFile": "./google-services.json",
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCKiN1FuOVkvn9NalCY4HcI7YFEDnJwFNM"

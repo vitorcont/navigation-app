@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import ProfilePictureMaleSvg from '../../assets/profilePictureMale.svg'
-import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
+import GeladoSvg from '../../assets/gelado.svg'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
 import { ListDivider } from '../../components/ListDivider'
@@ -10,6 +10,7 @@ import theme from '../../theme'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import navigationService from '../../services/navigation'
 import { useAuth } from '../../Hooks/auth'
+import PlacesInput from '../../components/PlacesInput'
 
 const Profile = () => {
     const { user, setUser, signOut } = useAuth()
@@ -19,14 +20,16 @@ const Profile = () => {
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureFemaleSvg}
+                Icon={GeladoSvg}
                 back
                 backColor
                 isProfile
             />
 
+
             <View style={styles.dataContainer}>
                 <Text style={styles.textLogo}>Perfil</Text>
+
                 <TouchableWithoutFeedback
                     onPress={() => navigationService.navigate('PersonalData')}
                 >

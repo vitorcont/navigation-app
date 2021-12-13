@@ -1,19 +1,12 @@
 import React, { useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native'
 import theme from '../../theme'
+import { DestinationProps } from '../../types'
 
 import { AntDesign } from '@expo/vector-icons'
 
 interface CardProps {
-    data: {
-        id: string
-        data: string
-        origem: string
-        destino: string
-        tempoViagem: string
-        consumo: string
-        distancia: string
-    }
+    data: DestinationProps
 }
 
 export function Card({ data }: CardProps) {
@@ -73,32 +66,20 @@ export function Card({ data }: CardProps) {
                         <View>
                             <View style={styles.line}>
                                 <View style={{ flexDirection: 'column' }}>
-                                    <Text style={styles.label}>Tempo de Viagem:</Text>
-                                    <Text style={styles.data}>{data.tempoViagem}h</Text>
-                                </View>
-
-                                <View style={{ flexDirection: 'column' }}>
-                                    <Text style={styles.label}>Consumo Médio:</Text>
-                                    <Text style={styles.data}>R$ {data.consumo}</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.line}>
-                                <View style={{ flexDirection: 'column' }}>
                                     <Text style={styles.label}>Origin:</Text>
                                     <Text style={styles.data}>{data.origem}</Text>
                                 </View>
 
-                                <View style={{ flexDirection: 'column', marginRight: '17.5%' }}>
-                                    <Text style={styles.label}>Distância:</Text>
-                                    <Text style={styles.data}>{data.distancia}km</Text>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={styles.label}>Destino:</Text>
+                                    <Text style={styles.data}>{data.destino}</Text>
                                 </View>
                             </View>
 
                             <View style={styles.line}>
-                                <View style={{ flexDirection: 'column' }}>
-                                    <Text style={styles.label}>Destino:</Text>
-                                    <Text style={styles.data}>{data.destino}</Text>
+                                <View style={{ flexDirection: 'column', marginRight: '17.5%' }}>
+                                    <Text style={styles.label}>Distância:</Text>
+                                    <Text style={styles.data}>{data.distancia}km</Text>
                                 </View>
                             </View>
                         </View>
@@ -152,13 +133,13 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontSize: 15,
+        fontSize: 30,
         fontFamily: theme.fonts.bold,
         color: theme.colors.purbleblue,
     },
 
     data: {
-        fontSize: 14,
+        fontSize: 28,
         fontFamily: theme.fonts.regular,
         color: theme.colors.purbleblue,
     },

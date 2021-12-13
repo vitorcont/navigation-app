@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 
-import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
+import GeladoSvg from '../../assets/gelado.svg'
 import { Card } from '../../components/Card'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
@@ -12,8 +12,6 @@ const items = [
         data: '03/12/21',
         origem: 'Sao Paulo',
         destino: 'Sao Paulo',
-        tempoViagem: '4:00',
-        consumo: '10,00',
         distancia: '300',
     },
     {
@@ -21,8 +19,6 @@ const items = [
         data: '03/12/21',
         origem: 'Sao Paulo',
         destino: 'Sao Paulo',
-        tempoViagem: '4:00',
-        consumo: '10,00',
         distancia: '300',
     },
 ]
@@ -33,7 +29,7 @@ const Destinations = () => {
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureFemaleSvg}
+                Icon={GeladoSvg}
                 backColor
                 back
                 isProfile

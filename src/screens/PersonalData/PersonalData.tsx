@@ -1,19 +1,19 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import ProfilePictureFemaleSvg from '../../assets/profilePictureFemale.svg'
+import GeladoSvg from '../../assets/gelado.svg'
 import { Header } from '../../components/Header'
 import theme from '../../theme'
 
-interface PersonalDataProps {}
+interface PersonalDataProps { }
 
-const PersonalData = ({}: PersonalDataProps) => {
+const PersonalData = ({ }: PersonalDataProps) => {
     return (
         <View style={styles.container}>
             <Header
                 backgroundColor={theme.colors.white}
                 dividerColor={theme.colors.purbleblue}
-                Icon={ProfilePictureFemaleSvg}
+                Icon={GeladoSvg}
                 backColor
                 back
                 isProfile
