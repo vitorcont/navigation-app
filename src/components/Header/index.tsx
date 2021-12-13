@@ -31,7 +31,7 @@ export function Header({
                     style={{
                         position: 'absolute',
                         alignSelf: 'flex-start',
-                        top: 40,
+                        top: '15%',
                         left: '7.5%',
                     }}
                 >
@@ -44,15 +44,8 @@ export function Header({
             {isProfile ? (
                 <>
                     <Icon width={'80%'} height={'50%'} style={{ marginBottom: 30 }} />
-                    <View
-                        style={{
-                            position: 'absolute',
-                            bottom: '-59%',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    >
-                        <Divider fill={dividerColor} width={'100%'} />
+                    <View style={{ position: 'absolute', bottom: '-10%' }}>
+                        <Divider fill={dividerColor} width={Window.widthScale(1.1)} height={Window.heightScale(0.18)} />
                     </View>
                 </>
             ) : (
