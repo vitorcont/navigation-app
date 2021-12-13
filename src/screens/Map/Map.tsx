@@ -4,7 +4,7 @@ import { StyleSheet, View, TouchableOpacity, Text, ScrollView } from 'react-nati
 import MapViewDirections from 'react-native-maps-directions'
 import * as Location from 'expo-location'
 import BottomSheet from 'reanimated-bottom-sheet'
-// import BottomModal from '../../components/BottomModal'
+import BottomModal from '../../components/BottomModal'
 import Window from '../../services/dimensions'
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import theme from '../../theme'
@@ -16,6 +16,7 @@ import Button from '../../components/Button'
 import PlacesInput from '../../components/PlacesInput'
 import { getDistance, getOffset } from '../../services/location'
 import MeIcon from '../../assets/ic_me.svg'
+import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
 
 export interface InfoProps {
     city: string
@@ -27,20 +28,15 @@ export interface InfoProps {
 }
 
 const Map = () => {
-    const { GOOGLE_MAPS_APIKEY } = process.env
+    const { GOOGLE_MAPS_APIKEY } = process.env;
     const [location, setLocation] = useState<Location.LocationObject | null>(null)
+    const [clear, setClear] = useState<() => void>(() => { });
+    const [prevLocation, setPrevLocation] = useState<Location.LocationObject | null>(null)
     const [destination, setDestination] = useState({ lat: 0, lng: 0 });
     const [destinoText, setDestinoText] = useState('');
     const [visible, setVisible] = useState(false)
     const mapRef = useRef<MapView | null>(null)
     const sheetRef = useRef<BottomSheet>(null)
-    const [info, setInfo] = useState<InfoProps>({} as InfoProps)
-    const { WEATHER_APIKEY } = process.env
-
-    // setInterval(async () => {
-    //   let location = await Location.getCurrentPositionAsync({});
-    //   setLocation(location);
-    // }, 1000)
 
     const centerLocation = () => {
         if (mapRef && mapRef.current && !!location)
@@ -52,78 +48,16 @@ const Map = () => {
             })
     }
 
-    const fetchWeather = async () => {
-        let city = destinoText
-
-        try {
-            let response
-            if (destination.lat === 0 && destination.lng === 0) {
-                if (!!location) {
-                    response = await axios.get(
-                        `https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${WEATHER_APIKEY}&units=metric`
-                    )
-                }
-            } else {
-                response = await axios.get(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${destination.lat}&lon=${destination.lng}&appid=${WEATHER_APIKEY}&units=metric`
-                )
+    const getLocation = async () => {
+        await Location.watchPositionAsync({
+            accuracy: 4,
+        }, newLocation => {
+            if ((location?.coords.latitude !== prevLocation?.coords.latitude) || !prevLocation) {
+                setPrevLocation(location);
+                setLocation(newLocation);
             }
-
-            response !== undefined &&
-                response !== null &&
-                setInfo({
-                    city: destinoText === '' ? 'Sua Localização' : destinoText,
-                    description: response.data.weather[0].description,
-                    temp: response.data.main.temp.toPrecision(2),
-                    temp_min: response.data.main.temp_min.toPrecision(2),
-                    temp_max: response.data.main.temp_max.toPrecision(2),
-                    humidity: response.data.main.humidity.toPrecision(2),
-                })
-        } catch (error) {
-            setInfo({} as InfoProps)
-        }
+        });
     }
-
-    const renderContent = () => (
-        <View
-            style={{
-                backgroundColor: 'white',
-                height: Window.heightScale(0.45),
-            }}
-        >
-            <ScrollView>
-                <View
-                    style={{
-                        width: '30%',
-                        height: Window.heightScale(0.006),
-                        backgroundColor: theme.colors.bottomSheet.gray,
-                        alignSelf: 'center',
-                        marginTop: Window.heightScale(0.023),
-                        borderRadius: 10,
-                    }}
-                />
-                <View>
-                    <View style={{ alignItems: 'center', marginTop: '10%', marginBottom: '20%' }}>
-                        {Object.keys(info).length !== 0 && <Weather info={info} />}
-
-                        <Input data={destinoText} editable={false} placeholder="Destino" />
-                        {
-                            destination.lat !== 0 && (
-                                <Input placeholder="Distância Média" data={`${getDistance(destination.lat, destination.lng, location.coords.latitude, location.coords.longitude)} Km`} />
-                            )
-                        }
-
-
-                        <Button label="Salvar" color={theme.colors.blue} small />
-                    </View>
-                </View>
-            </ScrollView>
-        </View>
-    )
-
-    useEffect(() => {
-        fetchWeather()
-    }, [destinoText, location])
 
     const sheetHandler = () => {
         if (sheetRef && sheetRef.current)
@@ -142,20 +76,14 @@ const Map = () => {
                 return
             }
 
-            let location = await Location.getCurrentPositionAsync({})
-            setLocation(location)
+            getLocation();
         })()
     }, [])
 
     useEffect(() => {
         if (destination.lat === 0) {
             if (mapRef && mapRef.current && !!location)
-                mapRef.current.animateToRegion({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
-                })
+                centerLocation();
         } else {
             if (mapRef && mapRef.current && !!location)
                 mapRef.current.animateToRegion({
@@ -228,6 +156,20 @@ const Map = () => {
             >
                 <FontAwesome name="user-circle-o" size={30} color="black" />
             </TouchableOpacity>
+            {destination.lat !== 0 && (
+                <TouchableOpacity
+                    onPress={() => {
+                        setDestination({ lat: 0, lng: 0 })
+                        setDestinoText('')
+                    }}
+                    activeOpacity={0.7}
+                    style={styles.cancelText}
+                >
+                    <Text
+                        style={{ fontSize: 16, fontWeight: '700' }}
+                    >Cancelar</Text>
+                </TouchableOpacity>
+            )}
             <TouchableOpacity
                 onPress={centerLocation}
                 activeOpacity={0.7}
@@ -246,11 +188,17 @@ const Map = () => {
                 ref={sheetRef}
                 snapPoints={[
                     Window.heightScale(0.06),
-                    Window.heightScale(0.45),
-                    Window.heightScale(0.45),
+                    Window.heightScale(0.7),
+                    Window.heightScale(0.7),
                 ]}
                 borderRadius={20}
-                renderContent={renderContent}
+                renderContent={() =>
+                    <BottomModal
+                        locationText={destinoText}
+                        distance={`${getDistance(location?.coords.latitude, location?.coords.longitude, destination.lat, destination.lng)} Km`}
+                        destination={destination}
+                        location={{ lat: location?.coords.latitude, lng: location?.coords.longitude }}
+                    />}
             />
         </View>
     )
@@ -291,6 +239,19 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white,
         padding: 5,
         borderRadius: 100,
+        elevation: 10,
+    },
+    cancelText: {
+        position: 'absolute',
+        top: Window.heightScale(0.076),
+        left: Window.widthScale(0.2),
+        alignSelf: 'flex-start',
+        zIndex: 100,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: theme.colors.white,
+        padding: 9,
+        borderRadius: 16,
         elevation: 10,
     },
     centerIcon: {

@@ -6,6 +6,7 @@ interface ButtonProps extends TouchableOpacityProps {
     label: string
     color: string
     small?: boolean
+    onPress?: () => void
 }
 
 const Button = ({ label, color, small = false, onPress }: ButtonProps) => {

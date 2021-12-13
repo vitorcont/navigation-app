@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react"
-import { View } from "react-native";
 import { GooglePlacesAutocomplete, GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete';
 import theme from "../../theme";
 
@@ -15,16 +14,16 @@ interface IProps {
 
 const PlacesInput = ({ setLocation, setAddressText }: IProps) => {
   const { GOOGLE_MAPS_APIKEY } = process.env
-  const mapRef = useRef<GooglePlacesAutocompleteRef | null>(null);
+  const searchRef = useRef<GooglePlacesAutocompleteRef | null>(null);
 
   return (
     <GooglePlacesAutocomplete
-      ref={mapRef}
+      ref={searchRef}
       placeholder='Para onde vamos...'
       minLength={2}
       onPress={(data, details = null) => {
-        if (mapRef && mapRef.current && details) {
-          mapRef.current.setAddressText(data.description);
+        if (searchRef && searchRef.current && details) {
+          searchRef.current.setAddressText(data.description);
           setAddressText(data.description);
           setLocation(details.geometry.location)
         }

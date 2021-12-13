@@ -50,7 +50,7 @@ export function Weather({ info }: WeatherProps) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: '90%',
         height: 100,
         marginBottom: 75,
     },

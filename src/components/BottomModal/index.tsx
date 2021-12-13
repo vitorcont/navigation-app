@@ -5,6 +5,7 @@ import theme from '../../theme'
 import { Input } from '../Input'
 import { Weather } from '../Weather'
 import axios from 'axios'
+import Button from '../Button'
 
 export interface InfoProps {
     city: string
@@ -15,43 +16,63 @@ export interface InfoProps {
     humidity: number
 }
 
-const BottomModal = () => {
+interface Destination {
+    lat: number,
+    lng: number
+}
+
+interface IProps {
+    locationText: string,
+    distance: string,
+    destination: Destination,
+    location: Destination
+}
+
+const BottomModal = ({ locationText, distance, destination, location }: IProps) => {
     const [info, setInfo] = useState<InfoProps>({} as InfoProps)
-    const [found, setFound] = useState(false)
     const { WEATHER_APIKEY } = process.env
 
     const fetchWeather = async () => {
+        let city = locationText;
+
         try {
-            const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=${WEATHER_APIKEY}&units=metric`
-            )
+            let response
+            if (destination.lat === 0 && destination.lng === 0) {
+                if (!!location) {
+                    response = await axios.get(
+                        `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=${WEATHER_APIKEY}&units=metric`
+                    )
+                }
+            } else {
+                response = await axios.get(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${destination.lat}&lon=${destination.lng}&appid=${WEATHER_APIKEY}&units=metric`
+                )
+            }
 
             response !== undefined &&
                 response !== null &&
                 setInfo({
-                    city: 'London',
+                    city: locationText === '' ? 'Sua Localização' : locationText,
                     description: response.data.weather[0].description,
                     temp: response.data.main.temp.toPrecision(2),
                     temp_min: response.data.main.temp_min.toPrecision(2),
                     temp_max: response.data.main.temp_max.toPrecision(2),
                     humidity: response.data.main.humidity.toPrecision(2),
                 })
-            setFound(true)
         } catch (error) {
-            console.log(error)
-            setFound(false)
+            setInfo({} as InfoProps)
         }
     }
 
     useEffect(() => {
         fetchWeather()
-    }, [found])
+    }, [locationText, location])
 
     return (
         <View
             style={{
                 backgroundColor: 'white',
-                height: Window.heightScale(0.45),
+                height: Window.heightScale(0.7),
             }}
         >
             <View>
@@ -65,15 +86,25 @@ const BottomModal = () => {
                         borderRadius: 10,
                     }}
                 />
-                <ScrollView>
-                    <View style={{ alignItems: 'center', marginTop: '10%' }}>
-                        <Input placeholder="Sua Localização" />
-                        <Input placeholder="Destino" />
-                        <Input placeholder="KM/L" />
+                <View>
+                    <View style={{ alignItems: 'center', marginTop: '10%', marginBottom: '20%' }}>
+                        {Object.keys(info).length !== 0 && <Weather info={info} />}
 
-                        <Weather info={info} />
+                        <Input data={locationText} editable={false} placeholder="Destino" />
+                        {
+                            destination.lat !== 0 && (
+                                <Input
+                                    placeholder="Distância Média"
+                                    data={distance}
+                                    editable={false}
+                                />
+                            )
+                        }
+                        <View style={{ marginBottom: '5%', width: '100%', alignItems: 'center' }}>
+                            <Button label="Salvar" color={theme.colors.blue} />
+                        </View>
                     </View>
-                </ScrollView>
+                </View>
             </View>
         </View>
     )
