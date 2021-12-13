@@ -44,8 +44,15 @@ export function Header({
             {isProfile ? (
                 <>
                     <Icon width={'80%'} height={'50%'} style={{ marginBottom: 30 }} />
-                    <View style={{ position: 'absolute', bottom: '-5%' }}>
-                        <Divider fill={dividerColor} />
+                    <View
+                        style={{
+                            position: 'absolute',
+                            bottom: '-59%',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    >
+                        <Divider fill={dividerColor} width={'100%'} />
                     </View>
                 </>
             ) : (
