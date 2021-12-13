@@ -28,12 +28,12 @@ const CreateAccount = () => {
     const handlePress = () => {
         if (ValidateEmail(form.email) && ValidatePassword(form.senha) && form.nome !== '') {
             const user: UserProps = {
-                avatar: '',
                 email: form.email,
                 age: form.idade,
                 name: form.nome,
                 password: form.senha,
                 auth: true,
+                destinations: new Array(),
             }
             signUp(user)
             navigationService.navigate('Login')

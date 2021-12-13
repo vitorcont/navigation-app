@@ -33,7 +33,7 @@ export interface InfoProps {
 const Map = () => {
     const { GOOGLE_MAPS_APIKEY } = process.env
     const [location, setLocation] = useState<Location.LocationObject | null>(null)
-    const [clear, setClear] = useState<() => void>(() => {})
+    const [clear, setClear] = useState<() => void>(() => { })
     const [prevLocation, setPrevLocation] = useState<Location.LocationObject | null>(null)
     const [destination, setDestination] = useState({ lat: 0, lng: 0 })
     const [destinoText, setDestinoText] = useState('')
@@ -58,9 +58,10 @@ const Map = () => {
             origem: 'Sua Localização',
             destino: destino,
             distancia: distancia,
-            data: moment().subtract(10, 'days').calendar(),
+            data: moment().subtract(0, 'days').calendar(),
         } as DestinationProps
 
+        console.log(user);
         user.destinations.push(d)
         UpdateUser(user)
         setUser(user)
@@ -70,6 +71,7 @@ const Map = () => {
         await Location.watchPositionAsync(
             {
                 accuracy: 4,
+                timeInterval: 1000
             },
             (newLocation) => {
                 if (location?.coords.latitude !== prevLocation?.coords.latitude || !prevLocation) {
@@ -91,7 +93,7 @@ const Map = () => {
     }
 
     useEffect(() => {
-        ;(async () => {
+        ; (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync()
             if (status !== 'granted') {
                 return

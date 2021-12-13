@@ -38,7 +38,7 @@ const ProfileNavigator = () => {
     const ProfileStack = createStack()
 
     return (
-        <ProfileStack.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+        <ProfileStack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
             <ProfileStack.Screen name="Profile" component={Profile} />
             <ProfileStack.Screen name="PersonalData" component={PersonalData} />
             <ProfileStack.Screen name="Destinations" component={Destinations} />
