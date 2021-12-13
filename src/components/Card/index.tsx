@@ -19,7 +19,7 @@ export function Card({ data }: CardProps) {
     const open = () => {
         setVisible(true)
         Animated.timing(ref, {
-            toValue: 136 + 60,
+            toValue: 116 + 60,
             duration: 500,
             useNativeDriver: false,
         }).start()
@@ -63,10 +63,10 @@ export function Card({ data }: CardProps) {
                     ]}
                 >
                     {gambiarra && (
-                        <View>
+                        <View style={{ marginTop: '5%' }}>
                             <View style={styles.line}>
                                 <View style={{ flexDirection: 'column' }}>
-                                    <Text style={styles.label}>Origin:</Text>
+                                    <Text style={styles.label}>Origem:</Text>
                                     <Text style={styles.data}>{data.origem}</Text>
                                 </View>
 
@@ -79,6 +79,11 @@ export function Card({ data }: CardProps) {
                             <View style={styles.line}>
                                 <View style={{ flexDirection: 'column', marginRight: '17.5%' }}>
                                     <Text style={styles.label}>Distância:</Text>
+                                    <Text style={styles.data}>{data.distancia}km</Text>
+                                </View>
+
+                                <View style={{ flexDirection: 'column', marginRight: '7.5%' }}>
+                                    <Text style={styles.label}>Custo:</Text>
                                     <Text style={styles.data}>{data.distancia}km</Text>
                                 </View>
                             </View>
@@ -129,17 +134,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: '5%',
-        marginVertical: '5%',
+        marginVertical: '2.5%',
     },
 
     label: {
-        fontSize: 30,
+        fontSize: 20,
         fontFamily: theme.fonts.bold,
-        color: theme.colors.purbleblue,
+        color: theme.colors.white,
     },
 
     data: {
-        fontSize: 28,
+        fontSize: 18,
         fontFamily: theme.fonts.regular,
         color: theme.colors.purbleblue,
     },
