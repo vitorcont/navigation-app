@@ -9,14 +9,17 @@ import Window from '../../services/dimensions'
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import theme from '../../theme'
 import navigationService from '../../services/navigation'
-import axios from 'axios'
-import { Input } from '../../components/Input'
-import { Weather } from '../../components/Weather'
-import Button from '../../components/Button'
 import PlacesInput from '../../components/PlacesInput'
 import { getDistance, getOffset } from '../../services/location'
 import MeIcon from '../../assets/ic_me.svg'
 import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
+import { DestinationProps } from '../../types'
+import moment from 'moment'
+import 'moment/locale/pt-br'
+import uuid from 'react-native-uuid'
+import { UpdateUser, useAuth } from '../../Hooks/auth'
+
+moment.locale('pt-br')
 
 export interface InfoProps {
     city: string
@@ -28,15 +31,16 @@ export interface InfoProps {
 }
 
 const Map = () => {
-    const { GOOGLE_MAPS_APIKEY } = process.env;
+    const { GOOGLE_MAPS_APIKEY } = process.env
     const [location, setLocation] = useState<Location.LocationObject | null>(null)
-    const [clear, setClear] = useState<() => void>(() => { });
+    const [clear, setClear] = useState<() => void>(() => {})
     const [prevLocation, setPrevLocation] = useState<Location.LocationObject | null>(null)
-    const [destination, setDestination] = useState({ lat: 0, lng: 0 });
-    const [destinoText, setDestinoText] = useState('');
+    const [destination, setDestination] = useState({ lat: 0, lng: 0 })
+    const [destinoText, setDestinoText] = useState('')
     const [visible, setVisible] = useState(false)
     const mapRef = useRef<MapView | null>(null)
     const sheetRef = useRef<BottomSheet>(null)
+    const { user, setUser } = useAuth()
 
     const centerLocation = () => {
         if (mapRef && mapRef.current && !!location)
@@ -44,19 +48,36 @@ const Map = () => {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
                 latitudeDelta: 0.01,
-                longitudeDelta: 0.01
+                longitudeDelta: 0.01,
             })
     }
 
+    const saveDestination = (destino: string, distancia: string) => {
+        let d = {
+            id: uuid.v4(),
+            origem: 'Sua Localização',
+            destino: destino,
+            distancia: distancia,
+            data: moment().subtract(10, 'days').calendar(),
+        } as DestinationProps
+
+        user.destinations.push(d)
+        UpdateUser(user)
+        setUser(user)
+    }
+
     const getLocation = async () => {
-        await Location.watchPositionAsync({
-            accuracy: 4,
-        }, newLocation => {
-            if ((location?.coords.latitude !== prevLocation?.coords.latitude) || !prevLocation) {
-                setPrevLocation(location);
-                setLocation(newLocation);
+        await Location.watchPositionAsync(
+            {
+                accuracy: 4,
+            },
+            (newLocation) => {
+                if (location?.coords.latitude !== prevLocation?.coords.latitude || !prevLocation) {
+                    setPrevLocation(location)
+                    setLocation(newLocation)
+                }
             }
-        });
+        )
     }
 
     const sheetHandler = () => {
@@ -70,44 +91,50 @@ const Map = () => {
     }
 
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             let { status } = await Location.requestForegroundPermissionsAsync()
             if (status !== 'granted') {
                 return
             }
 
-            getLocation();
+            getLocation()
         })()
     }, [])
 
     useEffect(() => {
         if (destination.lat === 0) {
-            if (mapRef && mapRef.current && !!location)
-                centerLocation();
+            if (mapRef && mapRef.current && !!location) centerLocation()
         } else {
             if (mapRef && mapRef.current && !!location)
                 mapRef.current.animateToRegion({
                     latitude: (destination.lat + location.coords.latitude) / 2,
                     longitude: (destination.lng + location.coords.longitude) / 2,
-                    latitudeDelta: getOffset(destination.lat, destination.lng, location.coords.latitude, location.coords.longitude),
-                    longitudeDelta: getOffset(destination.lat, destination.lng, location.coords.latitude, location.coords.longitude),
+                    latitudeDelta: getOffset(
+                        destination.lat,
+                        destination.lng,
+                        location.coords.latitude,
+                        location.coords.longitude
+                    ),
+                    longitudeDelta: getOffset(
+                        destination.lat,
+                        destination.lng,
+                        location.coords.latitude,
+                        location.coords.longitude
+                    ),
                 })
         }
     }, [destination, location])
 
     return (
         <View style={styles.container}>
-            <MapView
-                ref={mapRef}
-                style={styles.map}
-                provider={PROVIDER_GOOGLE}>
+            <MapView ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE}>
                 {destination.lat !== 0 && (
                     <MapViewDirections
                         lineDashPattern={[10]}
                         origin={location?.coords}
                         destination={{
                             latitude: destination.lat,
-                            longitude: destination.lng
+                            longitude: destination.lng,
                         }}
                         strokeWidth={5}
                         strokeColor="hotpink"
@@ -118,7 +145,7 @@ const Map = () => {
                     <Marker
                         coordinate={{
                             latitude: destination.lat,
-                            longitude: destination.lng
+                            longitude: destination.lng,
                         }}
                     >
                         <MaterialIcons name="location-pin" size={30} color="black" />
@@ -128,7 +155,7 @@ const Map = () => {
                     <Marker
                         coordinate={{
                             latitude: location?.coords.latitude,
-                            longitude: location?.coords.longitude
+                            longitude: location?.coords.longitude,
                         }}
                     >
                         <View style={{ elevation: 10 }}>
@@ -137,17 +164,17 @@ const Map = () => {
                     </Marker>
                 )}
             </MapView>
-            <View style={{
-                position: 'absolute',
-                top: Window.heightScale(0.15), zIndex: 100,
-                width: '100%',
-                alignItems: 'center',
-                elevation: 10,
-            }}>
-                <PlacesInput
-                    setLocation={setDestination}
-                    setAddressText={setDestinoText}
-                />
+            <View
+                style={{
+                    position: 'absolute',
+                    top: Window.heightScale(0.15),
+                    zIndex: 100,
+                    width: '100%',
+                    alignItems: 'center',
+                    elevation: 10,
+                }}
+            >
+                <PlacesInput setLocation={setDestination} setAddressText={setDestinoText} />
             </View>
             <TouchableOpacity
                 onPress={() => navigationService.navigate('ProfileNavigator')}
@@ -157,18 +184,39 @@ const Map = () => {
                 <FontAwesome name="user-circle-o" size={30} color="black" />
             </TouchableOpacity>
             {destination.lat !== 0 && (
-                <TouchableOpacity
-                    onPress={() => {
-                        setDestination({ lat: 0, lng: 0 })
-                        setDestinoText('')
-                    }}
-                    activeOpacity={0.7}
-                    style={styles.cancelText}
-                >
-                    <Text
-                        style={{ fontSize: 16, fontWeight: '700' }}
-                    >Cancelar</Text>
-                </TouchableOpacity>
+                <>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setDestination({ lat: 0, lng: 0 })
+                            setDestinoText('')
+                        }}
+                        activeOpacity={0.7}
+                        style={styles.cancelText}
+                    >
+                        <Text style={{ fontSize: 16, fontWeight: '700', color: 'red' }}>
+                            Cancelar
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            saveDestination(
+                                destinoText,
+                                `${getDistance(
+                                    location?.coords.latitude,
+                                    location?.coords.longitude,
+                                    destination.lat,
+                                    destination.lng
+                                )}`
+                            )
+                        }}
+                        activeOpacity={0.7}
+                        style={[styles.cancelText, { left: 175 }]}
+                    >
+                        <Text style={{ fontSize: 16, fontWeight: '700', color: theme.colors.blue }}>
+                            Salvar
+                        </Text>
+                    </TouchableOpacity>
+                </>
             )}
             <TouchableOpacity
                 onPress={centerLocation}
@@ -192,13 +240,22 @@ const Map = () => {
                     Window.heightScale(0.7),
                 ]}
                 borderRadius={20}
-                renderContent={() =>
+                renderContent={() => (
                     <BottomModal
                         locationText={destinoText}
-                        distance={`${getDistance(location?.coords.latitude, location?.coords.longitude, destination.lat, destination.lng)} Km`}
+                        distance={`${getDistance(
+                            location?.coords.latitude,
+                            location?.coords.longitude,
+                            destination.lat,
+                            destination.lng
+                        )} Km`}
                         destination={destination}
-                        location={{ lat: location?.coords.latitude, lng: location?.coords.longitude }}
-                    />}
+                        location={{
+                            lat: location?.coords.latitude,
+                            lng: location?.coords.longitude,
+                        }}
+                    />
+                )}
             />
         </View>
     )

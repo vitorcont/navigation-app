@@ -17,14 +17,14 @@ export interface InfoProps {
 }
 
 interface Destination {
-    lat: number,
+    lat: number
     lng: number
 }
 
 interface IProps {
-    locationText: string,
-    distance: string,
-    destination: Destination,
+    locationText: string
+    distance: string
+    destination: Destination
     location: Destination
 }
 
@@ -33,7 +33,7 @@ const BottomModal = ({ locationText, distance, destination, location }: IProps) 
     const { WEATHER_APIKEY } = process.env
 
     const fetchWeather = async () => {
-        let city = locationText;
+        let city = locationText
 
         try {
             let response
@@ -91,18 +91,9 @@ const BottomModal = ({ locationText, distance, destination, location }: IProps) 
                         {Object.keys(info).length !== 0 && <Weather info={info} />}
 
                         <Input data={locationText} editable={false} placeholder="Destino" />
-                        {
-                            destination.lat !== 0 && (
-                                <Input
-                                    placeholder="Distância Média"
-                                    data={distance}
-                                    editable={false}
-                                />
-                            )
-                        }
-                        <View style={{ marginBottom: '5%', width: '100%', alignItems: 'center' }}>
-                            <Button label="Salvar" color={theme.colors.blue} />
-                        </View>
+                        {destination.lat !== 0 && (
+                            <Input placeholder="Distância Média" data={distance} editable={false} />
+                        )}
                     </View>
                 </View>
             </View>
