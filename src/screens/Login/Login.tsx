@@ -54,8 +54,9 @@ const Login = () => {
                             label={'Entrar'}
                             color={theme.colors.blue}
                             onPress={() => {
-                                if (ValidateEmail(form.email) && ValidatePassword(form.senha))
-                                    signIn(form.email, form.senha)
+                                // if (ValidateEmail(form.email) && ValidatePassword(form.senha))
+                                //     signIn(form.email, form.senha)
+                                navigationService.navigate('Content')
                             }}
                         />
                     )}

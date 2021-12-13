@@ -1,11 +1,20 @@
+export type DestinationProps = {
+    id: string
+    origem: string
+    destino: string
+    distancia: string
+    data: string
+}
+
 export type UserProps = {
     name: string
-    age: number
+    age: string
     email: string
     password: string
-    avatar: string
     auth: boolean
+    destinations: DestinationProps[]
 }
+
 
 export type AuthContextProps = {
     user: UserProps

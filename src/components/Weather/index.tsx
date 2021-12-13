@@ -41,7 +41,7 @@ export function Weather({ info }: WeatherProps) {
                     Temperatura Máxima: <Text style={styles.text}>{info.temp_max}°C</Text>
                 </Text>
                 <Text style={[styles.text, { fontFamily: theme.fonts.medium }]}>
-                    Humidade: <Text style={styles.text}>{info.humidity}</Text>
+                    Umidade: <Text style={styles.text}>{info.humidity}</Text>
                 </Text>
             </View>
         </View>
