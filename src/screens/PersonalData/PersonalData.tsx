@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import GeladoSvg from '../../assets/gelado.svg'
 import { Header } from '../../components/Header'
+import { useAuth } from '../../Hooks/auth'
 import theme from '../../theme'
 
-interface PersonalDataProps { }
+interface PersonalDataProps {}
 
-const PersonalData = ({ }: PersonalDataProps) => {
+const PersonalData = ({}: PersonalDataProps) => {
+    const { user } = useAuth()
+    const [mostrarSenha, setMostrarSenha] = useState(false)
+
+    const hidePassword = () => {
+        let string = ''
+        for (let i = 0; i < user.password.length; i++) string += '*'
+        return string
+    }
+
     return (
         <View style={styles.container}>
             <Header
@@ -23,16 +33,25 @@ const PersonalData = ({ }: PersonalDataProps) => {
                 <Text style={styles.textLogo}>Dados Pessoais</Text>
 
                 <Text style={styles.label}>
-                    Nome: <Text style={styles.userDataText}>Renato Santos</Text>
+                    Nome: <Text style={styles.userDataText}>{user.name}</Text>
                 </Text>
                 <Text style={styles.label}>
-                    Idade: <Text style={styles.userDataText}>20</Text>
+                    Idade: <Text style={styles.userDataText}>{user.age}</Text>
                 </Text>
                 <Text style={styles.label}>
-                    E-mail: <Text style={styles.userDataText}>renato@email.com</Text>
+                    E-mail: <Text style={styles.userDataText}>{user.email}</Text>
                 </Text>
                 <Text style={styles.label}>
-                    Senha: <Text style={styles.userDataText}>*********</Text>
+                    Senha:{' '}
+                    <Text style={styles.userDataText}>
+                        {mostrarSenha ? user.password : hidePassword()}
+                    </Text>
+                </Text>
+                <Text
+                    style={[styles.label, { fontSize: 13 }]}
+                    onPress={() => setMostrarSenha(!mostrarSenha)}
+                >
+                    Mostrar Senha
                 </Text>
             </View>
         </View>

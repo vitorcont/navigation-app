@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import ProfilePictureMaleSvg from '../../assets/profilePictureMale.svg'
 import GeladoSvg from '../../assets/gelado.svg'
 import Button from '../../components/Button'
 import { Header } from '../../components/Header'
@@ -10,10 +9,9 @@ import theme from '../../theme'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import navigationService from '../../services/navigation'
 import { useAuth } from '../../Hooks/auth'
-import PlacesInput from '../../components/PlacesInput'
 
 const Profile = () => {
-    const { user, setUser, signOut } = useAuth()
+    const { signOut } = useAuth()
 
     return (
         <View style={styles.container}>
@@ -25,7 +23,6 @@ const Profile = () => {
                 backColor
                 isProfile
             />
-
 
             <View style={styles.dataContainer}>
                 <Text style={styles.textLogo}>Perfil</Text>

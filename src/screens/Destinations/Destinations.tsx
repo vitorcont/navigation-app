@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native'
 import GeladoSvg from '../../assets/gelado.svg'
 import { Card } from '../../components/Card'
 import { Header } from '../../components/Header'
+import { useAuth } from '../../Hooks/auth'
 import theme from '../../theme'
 
 const items = [
@@ -24,6 +25,8 @@ const items = [
 ]
 
 const Destinations = () => {
+    const { user } = useAuth()
+
     return (
         <View style={styles.container}>
             <Header
@@ -39,7 +42,7 @@ const Destinations = () => {
                 <Text style={styles.textLogo}>Destinos</Text>
 
                 <FlatList
-                    data={items}
+                    data={user.destinations}
                     keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
                     bounces={false}
