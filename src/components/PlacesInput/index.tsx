@@ -10,9 +10,10 @@ interface LocationProps {
 interface IProps {
   setLocation: (arg0: LocationProps) => void,
   setAddressText: (arg0: string) => void,
+  resetMap: () => void,
 }
 
-const PlacesInput = ({ setLocation, setAddressText }: IProps) => {
+const PlacesInput = ({ setLocation, setAddressText, resetMap }: IProps) => {
   const { GOOGLE_MAPS_APIKEY } = process.env
   const searchRef = useRef<GooglePlacesAutocompleteRef | null>(null);
 
@@ -26,6 +27,7 @@ const PlacesInput = ({ setLocation, setAddressText }: IProps) => {
           searchRef.current.setAddressText(data.description);
           setAddressText(data.description);
           setLocation(details.geometry.location)
+          resetMap();
         }
       }}
       fetchDetails={true}
