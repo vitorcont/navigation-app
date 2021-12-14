@@ -12,12 +12,12 @@ import navigationService from '../../services/navigation'
 import PlacesInput from '../../components/PlacesInput'
 import { getDistance, getOffset } from '../../services/location'
 import MeIcon from '../../assets/ic_me.svg'
-import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
 import { DestinationProps } from '../../types'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import uuid from 'react-native-uuid'
 import { UpdateUser, useAuth } from '../../Hooks/auth'
+import { MapButton } from '../../enum/map'
 
 moment.locale('pt-br')
 
@@ -33,23 +33,43 @@ export interface InfoProps {
 const Map = () => {
     const { GOOGLE_MAPS_APIKEY } = process.env
     const [location, setLocation] = useState<Location.LocationObject | null>(null)
-    const [clear, setClear] = useState<() => void>(() => { })
     const [prevLocation, setPrevLocation] = useState<Location.LocationObject | null>(null)
     const [destination, setDestination] = useState({ lat: 0, lng: 0 })
-    const [destinoText, setDestinoText] = useState('')
+    const [destinoText, setDestinoText] = useState('');
+    const [centerState, setCenterState] = useState(MapButton.CENTER_MAP)
     const [visible, setVisible] = useState(false)
     const mapRef = useRef<MapView | null>(null)
     const sheetRef = useRef<BottomSheet>(null)
     const { user, setUser } = useAuth()
 
-    const centerLocation = () => {
-        if (mapRef && mapRef.current && !!location)
-            mapRef.current.animateToRegion({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            })
+    const centerLocation = (user: boolean) => {
+        if (user || centerState === MapButton.CENTER_USER) {
+            if (mapRef && mapRef.current && !!location)
+                mapRef.current.animateToRegion({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                })
+        } else {
+            if (mapRef && mapRef.current && !!location)
+                mapRef.current.animateToRegion({
+                    latitude: (destination.lat + location.coords.latitude) / 2,
+                    longitude: (destination.lng + location.coords.longitude) / 2,
+                    latitudeDelta: getOffset(
+                        destination.lat,
+                        destination.lng,
+                        location.coords.latitude,
+                        location.coords.longitude
+                    ),
+                    longitudeDelta: getOffset(
+                        destination.lat,
+                        destination.lng,
+                        location.coords.latitude,
+                        location.coords.longitude
+                    ),
+                })
+        }
     }
 
     const saveDestination = (destino: string, distancia: string) => {
@@ -71,7 +91,7 @@ const Map = () => {
         await Location.watchPositionAsync(
             {
                 accuracy: 4,
-                timeInterval: 1000
+                timeInterval: 500
             },
             (newLocation) => {
                 if (location?.coords.latitude !== prevLocation?.coords.latitude || !prevLocation) {
@@ -80,6 +100,11 @@ const Map = () => {
                 }
             }
         )
+    }
+
+    const resetMap = () => {
+        setCenterState(MapButton.CENTER_MAP);
+        centerLocation(false);
     }
 
     const sheetHandler = () => {
@@ -104,28 +129,8 @@ const Map = () => {
     }, [])
 
     useEffect(() => {
-        if (destination.lat === 0) {
-            if (mapRef && mapRef.current && !!location) centerLocation()
-        } else {
-            if (mapRef && mapRef.current && !!location)
-                mapRef.current.animateToRegion({
-                    latitude: (destination.lat + location.coords.latitude) / 2,
-                    longitude: (destination.lng + location.coords.longitude) / 2,
-                    latitudeDelta: getOffset(
-                        destination.lat,
-                        destination.lng,
-                        location.coords.latitude,
-                        location.coords.longitude
-                    ),
-                    longitudeDelta: getOffset(
-                        destination.lat,
-                        destination.lng,
-                        location.coords.latitude,
-                        location.coords.longitude
-                    ),
-                })
-        }
-    }, [destination, location])
+        centerLocation(destination.lat === 0)
+    }, [destination, location, centerState])
 
     return (
         <View style={styles.container}>
@@ -176,7 +181,11 @@ const Map = () => {
                     elevation: 10,
                 }}
             >
-                <PlacesInput setLocation={setDestination} setAddressText={setDestinoText} />
+                <PlacesInput
+                    setLocation={setDestination}
+                    setAddressText={setDestinoText}
+                    resetMap={resetMap}
+                />
             </View>
             <TouchableOpacity
                 onPress={() => navigationService.navigate('ProfileNavigator')}
@@ -191,6 +200,7 @@ const Map = () => {
                         onPress={() => {
                             setDestination({ lat: 0, lng: 0 })
                             setDestinoText('')
+                            setCenterState(MapButton.CENTER_USER);
                         }}
                         activeOpacity={0.7}
                         style={styles.cancelText}
@@ -220,12 +230,33 @@ const Map = () => {
                     </TouchableOpacity>
                 </>
             )}
+            <View style={styles.speed}>
+                <Text style={{
+                    fontSize: 20,
+                    fontWeight: '700',
+                    color: 'blue'
+                }}>
+                    {location?.coords.speed} <Text style={{ fontSize: 12, fontWeight: '700', color: 'black' }}>KM/h</Text>
+                </Text>
+            </View>
             <TouchableOpacity
-                onPress={centerLocation}
+                onPress={() => {
+                    if (destination.lat !== 0) {
+                        setCenterState(centerState === MapButton.CENTER_MAP
+                            ? MapButton.CENTER_USER
+                            : MapButton.CENTER_MAP
+                        )
+                    } else {
+                        centerLocation(true)
+                    }
+                }}
                 activeOpacity={0.7}
                 style={styles.centerIcon}
             >
-                <MaterialIcons name="gps-fixed" size={30} color="black" />
+                {centerState === MapButton.CENTER_USER && destination.lat !== 0
+                    ? <Ionicons name="map-sharp" size={24} style={{ padding: 3 }} color="black" />
+                    : <MaterialIcons name="gps-fixed" size={30} color="black" />
+                }
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={sheetHandler}
@@ -324,6 +355,21 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white,
         padding: 5,
         borderRadius: 100,
+        elevation: 10,
+    },
+    speed: {
+        width: Window.widthScale(0.22),
+        justifyContent: 'flex-end',
+        position: 'absolute',
+        top: Window.heightScale(0.23),
+        right: Window.widthScale(0.08),
+        alignSelf: 'flex-start',
+        zIndex: 100,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: theme.colors.white,
+        padding: 10,
+        borderRadius: 15,
         elevation: 10,
     },
 })
