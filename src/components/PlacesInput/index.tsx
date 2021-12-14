@@ -36,7 +36,6 @@ const PlacesInput = ({ setLocation, setAddressText, resetMap }: IProps) => {
         language: 'pt-br',
       }}
       styles={{
-
         container: {
           width: '85%',
           alignItems: "center",
