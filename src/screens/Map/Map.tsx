@@ -236,7 +236,7 @@ const Map = () => {
                     fontWeight: '700',
                     color: '#379FFF'
                 }}>
-                    {location?.coords.speed} <Text style={{ fontSize: 12, fontWeight: '700', color: 'black' }}>KM/h</Text>
+                    {location?.coords.speed?.toFixed(0)} <Text style={{ fontSize: 12, fontWeight: '700', color: 'black' }}>KM/h</Text>
                 </Text>
             </View>
             <TouchableOpacity
